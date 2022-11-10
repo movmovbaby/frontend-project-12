@@ -4,6 +4,7 @@
   "description": "[![Actions Status](https://github.com/movmovbaby/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/movmovbaby/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build --prefix frontend",
     "start": "npx start-server --static ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
