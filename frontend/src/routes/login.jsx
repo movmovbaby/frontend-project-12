@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const auth = useAuth();
+  const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -25,20 +26,20 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
-        const { token } = response.data;
-        localStorage.setItem('username', token);
+        const { username, token } = response.data;
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', token);
         auth.logIn();
         navigate('/');
       } catch (error) {
-        if (error.name === 'AxiosError') {
-          console.error('Unauthorized', error);
-        }
+        formik.setSubmitting(false);
+        setLoginError('Login failed');
       }
     },
   });
 
   return (
-    <Form className="col-12 col-md-6 mt-3 mt-mb-0 position-relative" noValidate onSubmit={formik.handleSubmit}>
+    <Form className="col-12 col-md-6 mt-3 mt-mb-0 position-relative" onSubmit={formik.handleSubmit}>
       <h1 className="text-center mb-4">Войти</h1>
 
       <FloatingLabel
@@ -55,6 +56,7 @@ const LoginPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.username}
+          isInvalid={!!loginError}
         />
       </FloatingLabel>
 
@@ -74,8 +76,11 @@ const LoginPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
+          isInvalid={!!loginError}
         />
+        <Form.Control.Feedback type='invalid' tooltip>{'Неверные имя пользовсателя или пароль'}</Form.Control.Feedback>
       </FloatingLabel>
+
       <Button type="submit" variant="btn btn-outline-primary">Войти</Button>
     </Form>
     //w-100 mb-3 

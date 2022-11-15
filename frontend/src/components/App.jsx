@@ -21,10 +21,10 @@ const AuthProvider = ({ children }) => {
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
-  const location = useLocation();
+
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    auth.loggedIn ? children : <Navigate to="/login" />
   );
 };
 
@@ -35,7 +35,14 @@ const App = () => (
         <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
       </Navbar>
       <Routes>
-        <Route path='/' element={(<PrivateRoute><Root /></PrivateRoute>)} />
+        <Route
+          path='/'
+          element={(
+            <PrivateRoute>
+              <Root />
+            </PrivateRoute>
+          )}
+        />
         <Route path='login' element={<LoginPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
