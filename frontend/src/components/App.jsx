@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { BrowserRouter, Link, Routes, Route, Navigate } from "react-router-dom";
 import { Navbar } from 'react-bootstrap';
 import ErrorPage from './error-page.jsx';
-import Root from '../routes/root.jsx';
+import Chat from '../routes/chat.jsx';
 import LoginPage from '../routes/login.jsx';
 import AuthContext from '../contexts/index.jsx';
-import useAuth from '../hooks/index.jsx';
+// import useAuth from '../hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -37,7 +37,7 @@ const App = () => (
           path='/'
           element={(
             <PrivateRoute>
-              <Root />
+              <Chat />
             </PrivateRoute>
           )}
         />
