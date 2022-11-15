@@ -26,14 +26,18 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
-        const { username, token } = response.data;
-        localStorage.setItem('username', username);
-        localStorage.setItem('token', token);
-        auth.logIn();
-        navigate('/');
+        if (response.data) {
+          const { username, token } = response.data;
+          localStorage.setItem('username', username);
+          localStorage.setItem('token', token);
+          auth.logIn();
+          navigate('/');
+        }
       } catch (error) {
-        formik.setSubmitting(false);
-        setLoginError('Login failed');
+        if (error.name === 'AxiosError') {
+          formik.setSubmitting(false);
+          setLoginError('Login failed');
+        }
       }
     },
   });
@@ -78,7 +82,7 @@ const LoginPage = () => {
           value={formik.values.password}
           isInvalid={!!loginError}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{'Неверные имя пользовсателя или пароль'}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' tooltip>{'Неверные имя пользователя или пароль'}</Form.Control.Feedback>
       </FloatingLabel>
 
       <Button type="submit" variant="btn btn-outline-primary">Войти</Button>

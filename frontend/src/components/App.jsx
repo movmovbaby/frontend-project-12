@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Link, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Link, Routes, Route, Navigate } from "react-router-dom";
 import { Navbar } from 'react-bootstrap';
 import ErrorPage from './error-page.jsx';
 import Root from '../routes/root.jsx';
@@ -9,22 +9,20 @@ import useAuth from '../hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-
   const logIn = () => setLoggedIn(true);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn }}>
+    <AuthContext.Provider value={{ loggedIn, logIn, }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 const PrivateRoute = ({ children }) => {
-  const auth = useAuth();
-
+  const token = localStorage.getItem('token');
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" />
+    token !== null ? children : <Navigate to="/login" />
   );
 };
 
