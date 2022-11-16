@@ -1,6 +1,6 @@
-import Chat from '../components/Chat/Chat.jsx';
+import Chat from '../components/Chat.jsx';
 
-export default function Root() {
+export default () => {
 
   return <Chat />
 };
