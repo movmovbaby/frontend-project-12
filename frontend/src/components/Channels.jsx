@@ -14,13 +14,20 @@ const Channels = () => {
   const channels = useSelector(selectors.selectAll);
 
   return channels && (
-    <ul>
-      {channels.map(({ id, name }) => (
-        <li key={id}>
-          <button>{name}</button>
-        </li>
-      ))}
-    </ul>
+    <>
+      <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
+        <span>Каналы</span>
+      </div>
+      <ul className='nav flex-column nav-pills nav-fill px-2'>
+        {channels.map(({ id, name }) => (
+          <li key={id} className='nav-item w-100'>
+            <button type='button' className='w-100 rounded-0 text-start btn'>
+              <span class='me-1'>#</span>{name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   )
 };
 

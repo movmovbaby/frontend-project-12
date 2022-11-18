@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ErrorPage from './ErrorPage.jsx';
-import NavBar from './NavBar.jsx';
 import Chat from '../routes/chat.jsx';
 import LoginPage from '../routes/login.jsx';
 import AuthContext from '../contexts/index.jsx';
@@ -31,7 +30,6 @@ const App = () => (
   <StoreProvider store={store}>
     <AuthProvider>
       <BrowserRouter>
-        <NavBar />
         <Routes>
           <Route
             path='/'
