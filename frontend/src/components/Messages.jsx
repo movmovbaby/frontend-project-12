@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import { fetchMessages, selectors } from '../slices/messagesSlice.js';
-import { Button } from 'react-bootstrap';
+import MessageForm from './MessageForm.jsx';
 
 const Messages = () => {
   const dispatch = useDispatch();
@@ -32,10 +30,11 @@ const Messages = () => {
           ))}
         </div>
         <div className='mt-auto px-5 py-3'>
-          <InputGroup className='py-1 border rounded-2'>
+          {/* <InputGroup className='py-1 border rounded-2'>
             <Form.Control className='border-0 p-0 ps-2 form-control' placeholder='Введите сообщение' aria-label='Новое сообщение' value='' />
             <Button className='btn-group-vertical' type='submit' disabled></Button>
-          </InputGroup>
+          </InputGroup> */}
+          <MessageForm />
         </div>
       </div>
     </>
