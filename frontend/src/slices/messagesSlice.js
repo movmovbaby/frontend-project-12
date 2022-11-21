@@ -29,7 +29,6 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMessages.fulfilled, (state, action) => {
-      console.log('messages slice ACTION', action)
       messagesAdapter.addMany(state, action);
     })
   }
