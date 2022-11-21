@@ -2,14 +2,20 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMessages, selectors } from '../slices/messagesSlice.js';
+import { actions as messageActions } from '../slices/messagesSlice.js'
 import MessageForm from './MessageForm.jsx';
 
-const Messages = () => {
+const Messages = ({ socket }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchMessages());
   }, []);
+
+  socket.on('newMesasge', (msg) => {
+    dispatch(messageActions.addMessage(msg));
+  });
+
 
   const messages = useSelector(selectors.selectAll);
 
@@ -30,11 +36,7 @@ const Messages = () => {
           ))}
         </div>
         <div className='mt-auto px-5 py-3'>
-          {/* <InputGroup className='py-1 border rounded-2'>
-            <Form.Control className='border-0 p-0 ps-2 form-control' placeholder='Введите сообщение' aria-label='Новое сообщение' value='' />
-            <Button className='btn-group-vertical' type='submit' disabled></Button>
-          </InputGroup> */}
-          <MessageForm />
+          <MessageForm socket={socket} />
         </div>
       </div>
     </>

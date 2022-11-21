@@ -4,11 +4,10 @@ import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
-import io from 'socket.io-client';
 
 
-const MessageForm = () => {
-  const socket = io();
+
+const MessageForm = ({ socket }) => {
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +18,8 @@ const MessageForm = () => {
     }),
     onSubmit: (values) => {
       console.log('MSG=', values.message);
-      socket.emit('newMwssage', values.message);
+      const message = { body: values.message }
+      socket.emit('newMessage', message);
       values.message = '';
     },
   });

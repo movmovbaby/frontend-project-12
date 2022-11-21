@@ -12,7 +12,7 @@ export const fetchChannels = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` }
       }
       const response = await axios.get(routes.dataPath(), config);
-      return response.data.channels;
+      return response.data;
     } catch (error) {
       console.log('fetchcahnnel error', error);
     }
@@ -28,7 +28,8 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
       console.log('channel slice ACTION', action)
-      channelsAdapter.addMany(state, action);
+      state.currentChanelId = action.payload.currentChannelId;
+      channelsAdapter.addMany(state, action.payload.channels);
     })
   }
 });

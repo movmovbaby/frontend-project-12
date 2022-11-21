@@ -24,7 +24,9 @@ const messagesAdapter = createEntityAdapter();
 const messagesSlice = createSlice({
   name: 'messagesInfo',
   initialState: messagesAdapter.getInitialState({ loadingStatus: 'idle', error: null }),
-  reducers: {},
+  reducers: {
+    addMessage: messagesAdapter.addOne,
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchMessages.fulfilled, (state, action) => {
       console.log('messages slice ACTION', action)
@@ -33,5 +35,6 @@ const messagesSlice = createSlice({
   }
 });
 
+export const { actions } = messagesSlice;
 export const selectors = messagesAdapter.getSelectors((state) => state.messagesInfo);
 export default messagesSlice.reducer; 
