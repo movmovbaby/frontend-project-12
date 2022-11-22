@@ -17,7 +17,6 @@ const MessageForm = ({ socket }) => {
       message: yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log('MSG=', values.message);
       const message = { body: values.message, username: localStorage.getItem('username'), channelId: currentChannelId };
       socket.timeout(3000).emit('newMessage', message, (error) => {
         if (error) {

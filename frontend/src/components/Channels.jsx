@@ -4,12 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchChannels, selectors, actions as channelsActions } from '../slices/channelsSlice.js';
 import AddChannelModal from "./AddChannelModal";
 
-const Channels = () => {
+const Channels = ({ socket }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchChannels());
   }, [dispatch]);
+
+  socket.on('newChannel', (channel) => {
+    dispatch(channelsActions.addChannel(channel));
+    dispatch(channelsActions.setActiveChannel(channel.id));
+  })
 
   const channels = useSelector(selectors.selectAll);
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
@@ -18,7 +23,7 @@ const Channels = () => {
     <>
       <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
         <span>Каналы</span>
-        <AddChannelModal />
+        <AddChannelModal socket={socket} />
       </div>
       <ul className='nav flex-column nav-pills nav-fill px-2'>
         {channels.map(({ id, name }) => (
