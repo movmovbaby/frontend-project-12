@@ -7,7 +7,6 @@ export const fetchChannels = createAsyncThunk(
   async () => {
     try {
       const token = localStorage.getItem('token');
-
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       }
@@ -24,7 +23,11 @@ const channelsAdapter = createEntityAdapter();
 const channelsSlice = createSlice({
   name: 'channelsInfo',
   initialState: channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null }),
-  reducers: {},
+  reducers: {
+    setActiveChannel(state, action) {
+      state.currentChannelId = action.channelId;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
       console.log('channel slice ACTION', action)
@@ -34,5 +37,6 @@ const channelsSlice = createSlice({
   }
 });
 
+export const { actions } = channelsSlice;
 export const selectors = channelsAdapter.getSelectors((state) => state.channelsInfo);
 export default channelsSlice.reducer; 
