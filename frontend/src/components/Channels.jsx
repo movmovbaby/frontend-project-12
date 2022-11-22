@@ -12,16 +12,18 @@ const Channels = () => {
   }, []);
 
   const channels = useSelector(selectors.selectAll);
+  const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
 
   return channels && (
     <>
       <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
         <span>Каналы</span>
+        <button className='p-0 text-primary btn btn-group-vertical'></button>
       </div>
       <ul className='nav flex-column nav-pills nav-fill px-2'>
         {channels.map(({ id, name }) => (
           <li key={id} className='nav-item w-100'>
-            <button type='button' className='w-100 rounded-0 text-start btn'>
+            <button type='button' className={currentChannelId === id ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}>
               <span className='me-1'>#</span>{name}
             </button>
           </li>

@@ -18,7 +18,11 @@ const MessageForm = ({ socket }) => {
     onSubmit: (values) => {
       console.log('MSG=', values.message);
       const message = { body: values.message, username: localStorage.getItem('username'), channelId: currentChannelId };
-      socket.emit('newMessage', message);
+      socket.timeout(3000).emit('newMessage', message, (error) => {
+        if (error) {
+          console.log('Socket.io error while emit message');
+        }
+      });
       values.message = '';
     },
   });
@@ -37,6 +41,7 @@ const MessageForm = ({ socket }) => {
           onBlur={formik.handleBlur}
           autoComplete="message"
           required=""
+          disable={formik.isSubmitting === true ? 'true' : 'false'}
         />
         <Button className='btn-group-vertical' type='submit'>send</Button>
       </InputGroup>
