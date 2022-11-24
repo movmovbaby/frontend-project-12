@@ -17,7 +17,7 @@ const AddChannelModal = ({ socket }) => {
       name: '',
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required(), // .notOneOf(channelsNames, "Должно быть уникальным"),
+      name: yup.string().required(),
     }),
     onSubmit: (values) => {
       const { name } = values;
