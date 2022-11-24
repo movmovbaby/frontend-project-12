@@ -1,79 +1,43 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useFormik } from "formik";
 import * as yup from 'yup';
-
-// const AddChannelForm = ({ socket }) => {
-//   const formik = useFormik({
-//     initialValues: {
-//       name: '',
-//     },
-//     validationSchema: yup.object().shape({
-//       name: yup.string().required(),
-//     }),
-//     onSubmit: (values) => {
-//       const { name } = values;
-//       socket.emit('newChannel', { name });
-//     }
-//   })
-
-//   return (
-//     <Form onSubmit={formik.handleSubmit}>
-//       <Form.Group>
-//         <Form.Control
-//           id='name'
-//           name='name'
-//           className='mb-2'
-//           value={formik.values.message}
-//           onChange={formik.handleChange}
-//           onBlur={formik.handleBlur}
-//           autoComplete="name"
-//           disable={formik.isSubmitting === true ? 'true' : 'false'}
-//         />
-//         <Form.Label visuallyHidden>Имя канала</Form.Label>
-//         <div className='d-flex justify-content-end'>
-//           <Button className='me-2' variant='secondary'>Отменить</Button>
-//           <Button type='submit'>Отправить</Button>
-//         </div>
-//       </Form.Group>
-//     </Form>
-//   )
-// }
-
-// const ChannelModal = (props) => (
-//   <Modal
-//     {...props}
-//     size="m"
-//     aria-labelledby="contained-modal-title-vcenter"
-//     centered>
-//     <Modal.Header closeButton>
-//       <Modal.Title id="contained-modal-title-vcenter">
-//         Добавить канал
-//       </Modal.Title>
-//     </Modal.Header>
-//     <Modal.Body>
-//       <AddChannelForm socket={props.socket} />
-//     </Modal.Body>
-//   </Modal>
-// )
+import { selectors } from '../slices/channelsSlice.js';
 
 const AddChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(false);
+  const channels = useSelector(selectors.selectAll);
+  const channelsNames = channels.map((channel) => channel.name);
 
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required(),
+      name: yup.string().required(), // .notOneOf(channelsNames, "Должно быть уникальным"),
     }),
     onSubmit: (values) => {
       const { name } = values;
-      socket.emit('newChannel', { name });
+      const isntUnique = channelsNames.some((channelName) => channelName === name);
+
+      if (isntUnique) {
+        formik.setErrors({ 'name': 'Должно быть уникальным' });
+        return;
+      }
+
+      socket.timeout(3000).emit('newChannel', { name }, (error) => {
+        if (error) {
+          formik.setErrors({ 'name': 'Ошибка сети' });
+        } else {
+          setModalShow(false);
+        }
+      });
     }
   });
+  console.log('useFormik Errors', formik.errors);
 
   return (
     <>
@@ -109,11 +73,18 @@ const AddChannelModal = ({ socket }) => {
                 onBlur={formik.handleBlur}
                 autoComplete="name"
                 disable={formik.isSubmitting === true ? 'true' : 'false'}
+                autoFocus={true}
+                isInvalid={!!formik.errors.name}
               />
               <Form.Label visuallyHidden>Имя канала</Form.Label>
+              {formik.errors.name ? (
+                < Form.Control.Feedback type="invalid">
+                  {formik.errors.name}
+                </Form.Control.Feedback>) : null
+              }
               <div className='d-flex justify-content-end'>
-                <Button className='me-2' variant='secondary'>Отменить</Button>
-                <Button type='submit' onClick={() => setModalShow(false)}>Отправить</Button>
+                <Button className='me-2' onClick={() => setModalShow(false)} variant='secondary' >Отменить</Button>
+                <Button type='submit'>Отправить</Button>
               </div>
             </Form.Group>
           </Form>

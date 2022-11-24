@@ -25,7 +25,6 @@ const channelsSlice = createSlice({
   initialState: channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null }),
   reducers: {
     setActiveChannel(state, action) {
-      //console.log('TYPEOF action.payload=', typeof action.payload)
       state.currentChannelId = action.payload;
     },
     addChannel: channelsAdapter.addOne,
