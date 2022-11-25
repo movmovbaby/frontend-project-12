@@ -6,11 +6,12 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { fetchChannels, selectors, actions as channelsActions } from '../slices/channelsSlice.js';
-import AddChannelModal from "./AddChannelModal";
-
+import { actions as modalActions } from '../slices/modalSlice.js';
 
 const Channels = ({ socket }) => {
   const dispatch = useDispatch();
+  const channels = useSelector(selectors.selectAll);
+  const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -19,10 +20,15 @@ const Channels = ({ socket }) => {
   socket.on('newChannel', (channel) => {
     dispatch(channelsActions.addChannel(channel));
     dispatch(channelsActions.setActiveChannel(channel.id));
+  });
+
+  socket.on('removeChannel', (channel) => {
+    const general = channels.filter((channel) => channel.name === 'general');
+    dispatch(channelsActions.removeChannel(channel));
+    dispatch(channelsActions.setActiveChannel(general.id));
   })
 
-  const channels = useSelector(selectors.selectAll);
-  const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+
 
   const SimpleButton = (channel, isActive) => (
     <button
@@ -47,8 +53,11 @@ const Channels = ({ socket }) => {
         <span className='visually-hidden'>Управление каналом</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Добавить</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Удалить</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: channel.id } }))}>
+          Удалить
+        </Dropdown.Item>
+        <Dropdown.Item >Переименовать</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown >
   )
@@ -57,7 +66,15 @@ const Channels = ({ socket }) => {
     <>
       <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
         <span>Каналы</span>
-        <AddChannelModal socket={socket} />
+        <Button
+          type="button"
+          className='p-0 text-primary btn btn-group-vertical'
+          variant="btn-primary-outline"
+          onClick={() => dispatch(modalActions.openModal({ type: 'addChannel', extra: null }))}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path></svg>
+          <span className='visually-hidden'>+</span>
+        </Button>
       </div>
       <Nav variant="pills" className='flex-column nav-fill px-2' as='ul'>
         {channels.map(({ id, name, removable }) => {
