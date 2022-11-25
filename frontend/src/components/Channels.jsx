@@ -22,13 +22,11 @@ const Channels = ({ socket }) => {
     dispatch(channelsActions.setActiveChannel(channel.id));
   });
 
-  socket.on('removeChannel', (channel) => {
-    const general = channels.filter((channel) => channel.name === 'general');
-    dispatch(channelsActions.removeChannel(channel));
-    dispatch(channelsActions.setActiveChannel(general.id));
+  socket.on('removeChannel', (channelId) => {
+    const { id } = channelId;
+    dispatch(channelsActions.deleteChannel(id));
+    dispatch(channelsActions.setActiveChannel(1));
   })
-
-
 
   const SimpleButton = (channel, isActive) => (
     <button
@@ -43,7 +41,7 @@ const Channels = ({ socket }) => {
   const RemovableButton = (channel, isActive) => (
     <Dropdown as={ButtonGroup} className='d-flex dropdown btn-group'>
       <Button
-        className={isActive ? 'w-100 rounded-0 text-start text-truncate' : 'w-100 rounded-0 text-start text-truncatet'}
+        className={isActive ? 'w-100 rounded-0 text-start text-truncate' : 'w-100 rounded-0 text-start text-truncate'}
         onClick={() => dispatch(channelsActions.setActiveChannel(channel.id))}
         variant={isActive ? 'secondary' : 'light'}
       >

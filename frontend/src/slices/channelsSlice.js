@@ -13,7 +13,7 @@ export const fetchChannels = createAsyncThunk(
       const response = await axios.get(routes.dataPath(), config);
       return response.data;
     } catch (error) {
-      console.log('fetchcahnnel error', error);
+      console.log('fetch channel error', error);
     }
   }
 );
@@ -28,13 +28,17 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload;
     },
     addChannel: channelsAdapter.addOne,
-    deleteChannel: channelsAdapter.removeOne,
+    deleteChannel: (state, action) => {
+      channelsAdapter.removeOne(state, action.payload);
+    }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchChannels.fulfilled, (state, action) => {
-      state.currentChannelId = action.payload.currentChannelId;
-      channelsAdapter.addMany(state, action.payload.channels);
-    })
+    builder
+      .addCase(fetchChannels.fulfilled, (state, action) => {
+        state.currentChannelId = action.payload.currentChannelId;
+        channelsAdapter.addMany(state, action.payload.channels);
+      })
+
   }
 });
 

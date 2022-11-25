@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { actions as modalActions } from '../slices/modalSlice.js';
 
 const DeleteChannelModal = ({ socket }) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(true);
   const dispatch = useDispatch();
+  const { channelId } = useSelector((state) => state.modal.extra);
+
 
   const closeModal = () => {
     setModalShow(false);
     dispatch(modalActions.closeModal());
   }
 
-  const deleteChannel = (channel) => {
-    socket.timeout(3000).emit('removeChannel', { id: channel.id }, (error) => {
+  const deleteChannel = (channelId) => {
+    console.log('delete channel function')
+    socket.timeout(3000).emit('removeChannel', { id: channelId }, (error) => {
       if (error) {
         console.log('Ошибка сети');
       } else {
@@ -37,7 +40,7 @@ const DeleteChannelModal = ({ socket }) => {
         <div className='d-flex justify-content-end'>
           <Button className='me-2' onClick={() => closeModal()}>
             Отменить</Button>
-          <Button variant='danger' type='submit'>Удалить</Button>
+          <Button variant='danger' onClick={() => deleteChannel(channelId)}>Удалить</Button>
         </div>
       </Modal.Body>
     </Modal>
