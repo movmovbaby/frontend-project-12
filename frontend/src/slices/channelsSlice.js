@@ -24,10 +24,11 @@ const channelsSlice = createSlice({
   name: 'channelsInfo',
   initialState: channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null }),
   reducers: {
+    addChannel: channelsAdapter.addOne,
+    updateChannel: channelsAdapter.updateOne,
     setActiveChannel(state, action) {
       state.currentChannelId = action.payload;
     },
-    addChannel: channelsAdapter.addOne,
     deleteChannel: (state, action) => {
       channelsAdapter.removeOne(state, action.payload);
     }

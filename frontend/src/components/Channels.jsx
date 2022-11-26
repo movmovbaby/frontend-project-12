@@ -26,6 +26,10 @@ const Channels = ({ socket }) => {
     const { id } = channelId;
     dispatch(channelsActions.deleteChannel(id));
     dispatch(channelsActions.setActiveChannel(1));
+  });
+
+  socket.on('renameChannel', ({ id, name }) => {
+    dispatch(channelsActions.updateChannel({ id, changes: { name } }));
   })
 
   const SimpleButton = (channel, isActive) => (
@@ -55,7 +59,10 @@ const Channels = ({ socket }) => {
           onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: channel.id } }))}>
           Удалить
         </Dropdown.Item>
-        <Dropdown.Item >Переименовать</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: channel.id } }))}>
+          Переименовать
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown >
   )
