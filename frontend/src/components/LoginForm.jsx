@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import * as yup from 'yup';
 import axios from 'axios';
-import routes from '../routes.jsx';
+import routes from '../routes.js';
 import useAuth from "../hooks/index.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -24,12 +24,14 @@ const LoginForm = () => {
       password: yup.string().required(),
     }),
     onSubmit: async (values) => {
+      formik.setSubmitting(true);
       try {
         const response = await axios.post(routes.loginPath(), values);
         if (response.data) {
           const { username, token } = response.data;
           localStorage.setItem('username', username);
           localStorage.setItem('token', token);
+          formik.setSubmitting(false);
           auth.logIn();
           navigate('/');
         }
@@ -71,11 +73,10 @@ const LoginForm = () => {
         <Form.Control
           name="password"
           id="password"
-          typr="text"
+          type="password"
           autoComplete="current-password"
           required=""
           placeholder="Пароль"
-          type="password"
           className="form-control"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -85,7 +86,7 @@ const LoginForm = () => {
         <Form.Control.Feedback type='invalid' tooltip>{'Неверные имя пользователя или пароль'}</Form.Control.Feedback>
       </FloatingLabel>
 
-      <Button type="submit" variant="btn btn-outline-primary">Войти</Button>
+      <Button type="submit" variant="outline-primary">Войти</Button>
     </Form>
   )
 };
