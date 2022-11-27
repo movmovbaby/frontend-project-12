@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ErrorPage from './ErrorPage.jsx';
-import Chat from '../routes/chat.jsx';
+import ChatPage from '../routes/chat.jsx';
 import LoginPage from '../routes/login.jsx';
 import SignupPage from '../routes/signup.jsx';
 import AuthContext from '../contexts/index.jsx';
@@ -58,7 +58,7 @@ const App = () => (
             path='/'
             element={(
               <PrivateRoute>
-                <Chat />
+                <ChatPage />
               </PrivateRoute>
             )}
           />
