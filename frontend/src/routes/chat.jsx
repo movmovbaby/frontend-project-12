@@ -1,6 +1,8 @@
 import Chat from '../components/Chat.jsx';
 
-export default () => {
+const Chat = () => {
 
   return <Chat />
 };
+
+export default Chat;
