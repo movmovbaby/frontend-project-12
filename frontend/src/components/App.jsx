@@ -9,7 +9,12 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from '../slices/index.js';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
+  });
 
   const [user, setUser] = useState(() => {
     const username = localStorage.getItem('username');

@@ -35,6 +35,9 @@ const channelsSlice = createSlice({
       .addCase(fetchChannels.fulfilled, (state, action) => {
         state.currentChannelId = action.payload.currentChannelId;
         channelsAdapter.addMany(state, action.payload.channels);
+      })
+      .addCase(fetchChannels.rejected, (state, action) => {
+        console.log('Fetching channels error');
       });
   },
 });
