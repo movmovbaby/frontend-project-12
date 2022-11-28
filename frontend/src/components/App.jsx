@@ -29,9 +29,11 @@ const AuthProvider = ({ children }) => {
   }
 
   const logIn = () => setLoggedIn(true);
+
   const logOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    return <Navigate to="login" />
   };
 
   return (
