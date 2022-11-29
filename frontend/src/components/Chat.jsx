@@ -6,11 +6,9 @@ import Channels from "./Channels.jsx";
 import Messages from "./Messages.jsx";
 import Wrapper from './Wrapper.jsx';
 import Modal from './Modal.jsx';
-import { io } from 'socket.io-client';
 
-const socket = io();
 
-const Chat = () => {
+const Chat = ({ socket }) => {
   const isOpened = useSelector((state) => state.modal.isOpened);
   return (
     <Wrapper>

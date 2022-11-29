@@ -3,11 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image'
 import Card from 'react-bootstrap/Card';
-import SignupForm from '../components/SignupForm.jsx';
-import Wrapper from '../components/Wrapper.jsx';
-import image from '../assets/signup_man.jpg'
+import LoginForm from './LoginForm.jsx';
+import Wrapper from './Wrapper.jsx';
+import image from '../assets/man.jpg';
 
-const SignupPage = () => (
+const LoginPage = () => (
   <Wrapper>
     <Container className='h-100' fluid>
       <Row className='justify-content-center align-content-center h-100'>
@@ -18,11 +18,16 @@ const SignupPage = () => (
                 <Image
                   src={image}
                   roundedCircle
-                  alt='Регистрация'
+                  alt='Войти'
                 />
               </div>
-              <SignupForm />
+              <LoginForm />
             </Card.Body>
+            <Card.Footer className='p-4'>
+              <div className='text-center'>
+                <span>Нет аккаунта?</span> <a href='/signup'>Регистрация</a>
+              </div>
+            </Card.Footer>
           </Card>
         </div>
       </Row>
@@ -30,4 +35,4 @@ const SignupPage = () => (
   </ Wrapper>
 );
 
-export default SignupPage;
+export default LoginPage;
