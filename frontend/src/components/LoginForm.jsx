@@ -48,10 +48,10 @@ const LoginForm = () => {
 
   return (
     <Form className="col-12 col-md-6 mt-3 mt-mb-0 position-relative" onSubmit={formik.handleSubmit}>
-      <h1 className="text-center mb-4">{t('loginPage.title')}</h1>
+      <h1 className="text-center mb-4">{t('loginForm.title')}</h1>
 
       <FloatingLabel
-        label="Ваш ник"
+        label={t('loginForm.usernameLabel')}
         className="mb-3"
       >
         <Form.Control
@@ -69,7 +69,7 @@ const LoginForm = () => {
       </FloatingLabel>
 
       <FloatingLabel
-        label="Пароль"
+        label={t('loginForm.passwordLabel')}
         className="mb-4"
       >
         <Form.Control
@@ -85,10 +85,10 @@ const LoginForm = () => {
           value={formik.values.password}
           isInvalid={!!loginError}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{'Неверные имя пользователя или пароль'}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' tooltip>{t('loginForm.error')}</Form.Control.Feedback>
       </FloatingLabel>
 
-      <Button type="submit" variant="outline-primary">Войти</Button>
+      <Button type="submit" variant="outline-primary">{t('loginForm.submitButtonText')}</Button>
     </Form>
   )
 };
