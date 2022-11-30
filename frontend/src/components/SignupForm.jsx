@@ -8,10 +8,12 @@ import * as yup from 'yup';
 import routes from '../routes.js'
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/index.jsx";
+import { useTranslation } from 'react-i18next';
 
 const SignupForm = () => {
   const navigate = useNavigate();
   const auth = useAuth();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -23,16 +25,16 @@ const SignupForm = () => {
       username: yup
         .string()
         .required()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов'),
+        .min(3, t('signupForm.validationError.usernameField'))
+        .max(20, t('signupForm.validationError.usernameField')),
       password: yup
         .string()
         .required()
-        .min(6, 'Не менее 6 символов'),
+        .min(6, t('signupForm.validationError.passwordField')),
       confirmPassword: yup
         .string()
         .required()
-        .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
+        .oneOf([yup.ref('password'), null], t('signupForm.validationError.confirmPasswordField'))
     }),
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -54,7 +56,7 @@ const SignupForm = () => {
           formik.setSubmitting(false);
           formik.setErrors({ 'username': '    ' });
           formik.setErrors({ 'password': '    ' });
-          formik.setErrors({ 'confirmPassword': 'Такой пользователь уже существует' });
+          formik.setErrors({ 'confirmPassword': t('signupForm.validationError.userAlreadyExist') });
           console.log('Formik', formik)
           console.log('Signup failed');
         }
@@ -65,10 +67,10 @@ const SignupForm = () => {
 
   return (
     <Form className="w-50" onSubmit={formik.handleSubmit}>
-      <h1 className="text-center mb-4">Регистрация</h1>
+      <h1 className="text-center mb-4">{t('signupForm.title')}</h1>
 
       <FloatingLabel
-        label="Имя пользователя"
+        label={t('signupForm.usernameLabel')}
         className="mb-3"
       >
         <Form.Control
@@ -87,7 +89,7 @@ const SignupForm = () => {
       </FloatingLabel>
 
       <FloatingLabel
-        label="Пароль"
+        label={t('signupForm.passwordLabel')}
         className="mb-3"
       >
         <Form.Control
@@ -108,7 +110,7 @@ const SignupForm = () => {
       </FloatingLabel>
 
       <FloatingLabel
-        label="Подтвердите пароль"
+        label={t('signupForm.confirmPassword')}
         className="mb-4"
       >
         <Form.Control
@@ -126,7 +128,7 @@ const SignupForm = () => {
         />
         <Form.Control.Feedback type='invalid' tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>
       </FloatingLabel>
-      <Button type='submit' className="w-100" variant='outline-primary' disabled={formik.isSubmitting}>Зарегистрироваться</Button>
+      <Button type='submit' className="w-100" variant='outline-primary' disabled={formik.isSubmitting}>{t('signupForm.submitButtonText')}</Button>
     </Form>
   )
 }

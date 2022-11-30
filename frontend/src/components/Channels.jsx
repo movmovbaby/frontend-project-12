@@ -7,10 +7,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { fetchChannels, selectors, actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
+import { useTranslation } from 'react-i18next';
 
 const Channels = ({ socket }) => {
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
+  const { t } = useTranslation();
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const Channels = ({ socket }) => {
         <span className='me-1'>#</span>{channel.name}
       </Button>
       <Dropdown.Toggle split className='flex-grow-0 ' variant={isActive ? 'secondary' : 'light'}>
-        <span className='visually-hidden'>Управление каналом</span>
+        <span className='visually-hidden'>t('channels.manage')</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item
@@ -70,7 +72,7 @@ const Channels = ({ socket }) => {
   return channels && (
     <>
       <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
-        <span>Каналы</span>
+        <span>{t('channels.title')}</span>
         <Button
           type="button"
           className='p-0 text-primary btn btn-group-vertical'

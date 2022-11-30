@@ -5,9 +5,11 @@ import { fetchMessages, selectors } from '../slices/messagesSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js'
 import MessageForm from './MessageForm.jsx';
 import { selectors as channelsSelector } from '../slices/channelsSlice.js';
+import { useTranslation } from 'react-i18next';
 
 const Messages = ({ socket }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchMessages());
@@ -22,7 +24,6 @@ const Messages = ({ socket }) => {
   const activeChannel = useSelector((state) => channelsSelector.selectById(state, activeChannelId));
   const channelsMessages = messages.filter((message) => message.channelId === activeChannelId);
 
-
   return channelsMessages && (
     <>
       <div className='d-flex flex-column h-100'>
@@ -30,7 +31,7 @@ const Messages = ({ socket }) => {
           <p className='m-0'>
             <b># {activeChannel && activeChannel.name}</b>
           </p>
-          <span className='text-muted'>{channelsMessages.length} messages</span>
+          <span className='text-muted'>{t('messagesHeader.messagesCount', { count: channelsMessages.length })}</span>
         </div>
         <div id='message-box' className='chat-messages overflow-auto px-5 '>
           {channelsMessages.map(({ id, body, username }) => (
