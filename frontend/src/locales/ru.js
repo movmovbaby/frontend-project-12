@@ -39,6 +39,10 @@ const ru = {
     messagesForm: {
       placeholder: 'Введите сообщение',
       submitButton: 'Отправить',
+    },
+    addChannelErrors: {
+      network: 'Ошибка сети',
+      uniqueName: 'Имя должно быть уникальным',
     }
 
   }

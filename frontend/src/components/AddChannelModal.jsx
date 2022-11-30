@@ -7,6 +7,8 @@ import { useFormik } from "formik";
 import * as yup from 'yup';
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const AddChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
@@ -14,6 +16,7 @@ const AddChannelModal = ({ socket }) => {
   const channelsNames = channels.map((channel) => channel.name);
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const closeModal = () => {
     setModalShow(false);
@@ -32,65 +35,70 @@ const AddChannelModal = ({ socket }) => {
       const isntUnique = channelsNames.some((channelName) => channelName === name);
 
       if (isntUnique) {
-        formik.setErrors({ 'name': 'Должно быть уникальным' });
+        formik.setErrors({ 'name': t('addChannelErrors.uniqueName') });
         return;
       }
 
       socket.timeout(3000).emit('newChannel', { name }, (error) => {
         if (error) {
-          formik.setErrors({ 'name': 'Ошибка сети' });
+          formik.setErrors({ 'name': t('addChannelErrors.network') });
+
         } else {
           setModalShow(false);
           dispatch(modalActions.closeModal());
+          toast.success("Error");
         }
       });
     }
   });
 
   return (
-    <Modal
-      show={modalShow}
-      onHide={() => closeModal()}
-      size="m"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Добавить канал
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              id='name'
-              name='name'
-              className='mb-2'
-              value={formik.values.message}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              autoComplete="name"
-              disable={formik.isSubmitting === true ? 'true' : 'false'}
-              autoFocus={true}
-              isInvalid={!!formik.errors.name}
-            />
-            <Form.Label visuallyHidden>Имя канала</Form.Label>
-            {formik.errors.name ? (
-              < Form.Control.Feedback type="invalid">
-                {formik.errors.name}
-              </Form.Control.Feedback>) : null}
-            <div className='d-flex justify-content-end'>
-              <Button className='me-2'
-                onClick={() => closeModal()}
-                variant='secondary' >
-                Отменить
-              </Button>
-              <Button type='submit'>Отправить</Button>
-            </div>
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-    </Modal>
+    <>
+      <Modal
+        show={modalShow}
+        onHide={() => closeModal()}
+        size="m"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered>
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Добавить канал
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Group>
+              <Form.Control
+                id='name'
+                name='name'
+                className='mb-2'
+                value={formik.values.message}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                autoComplete="name"
+                disable={formik.isSubmitting === true ? 'true' : 'false'}
+                autoFocus={true}
+                isInvalid={!!formik.errors.name}
+              />
+              <Form.Label visuallyHidden>Имя канала</Form.Label>
+              {formik.errors.name ? (
+                < Form.Control.Feedback type="invalid">
+                  {formik.errors.name}
+                </Form.Control.Feedback>) : null}
+              <div className='d-flex justify-content-end'>
+                <Button className='me-2'
+                  onClick={() => closeModal()}
+                  variant='secondary' >
+                  Отменить
+                </Button>
+                <Button type='submit'>Отправить</Button>
+              </div>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+    </>
   )
 }
 

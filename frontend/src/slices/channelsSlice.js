@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from "react-toastify";
 import routes from '../routes.js';
 
 export const fetchChannels = createAsyncThunk(
@@ -37,7 +38,7 @@ const channelsSlice = createSlice({
         channelsAdapter.addMany(state, action.payload.channels);
       })
       .addCase(fetchChannels.rejected, (state, action) => {
-        console.log('Fetching channels error');
+        toast.error("Error");
       });
   },
 });

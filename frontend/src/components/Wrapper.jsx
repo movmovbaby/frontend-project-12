@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from '../components/NavBar.jsx';
+import { ToastContainer } from "react-toastify";
 
 const Wrapper = ({ children }) => (
   <div className='h-100'>
@@ -8,6 +9,7 @@ const Wrapper = ({ children }) => (
         <NavBar />
         {children}
       </div>
+      <ToastContainer />
     </div>
   </div>
 )
