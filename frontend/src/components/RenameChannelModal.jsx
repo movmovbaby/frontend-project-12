@@ -7,6 +7,8 @@ import { useFormik } from "formik";
 import * as yup from 'yup';
 import { selectors } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const RenameChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
@@ -16,6 +18,7 @@ const RenameChannelModal = ({ socket }) => {
   const renamingChannel = useSelector((state) => selectors.selectById(state, channelId));
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const closeModal = () => {
     setModalShow(false);
@@ -34,16 +37,17 @@ const RenameChannelModal = ({ socket }) => {
       const isntUnique = channelsNames.some((channelName) => channelName === name);
 
       if (isntUnique) {
-        formik.setErrors({ 'name': 'Должно быть уникальным' });
+        formik.setErrors({ 'name': t('renameChannel.error.uniqueName') });
         return;
       }
 
       socket.timeout(3000).emit('renameChannel', { id: channelId, name }, (error) => {
         if (error) {
-          formik.setErrors({ 'name': 'Ошибка сети' });
+          formik.setErrors({ 'name': t('renameChannel.error.network') });
         } else {
           setModalShow(false);
           dispatch(modalActions.closeModal());
+          toast.success(t('renameChannel.success'));
         }
       });
     }

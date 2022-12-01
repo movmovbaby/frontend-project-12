@@ -29,6 +29,7 @@ const ru = {
     channels: {
       title: 'Каналы',
       manage: 'Управление каналом',
+      loadingError: 'Ошибка соединения',
     },
     messagesHeader: {
       messagesCount_zero: '{{count}} сообщений',
@@ -40,11 +41,26 @@ const ru = {
       placeholder: 'Введите сообщение',
       submitButton: 'Отправить',
     },
-    addChannelErrors: {
-      network: 'Ошибка сети',
-      uniqueName: 'Имя должно быть уникальным',
-    }
-
+    addChannel: {
+      errors: {
+        network: 'Ошибка сети',
+        uniqueName: 'Имя должно быть уникальным',
+      },
+      success: 'Канал создан',
+    },
+    renameChannel: {
+      error: {
+        network: 'Ошибка сети',
+        uniqueName: 'Имя должно быть уникальным',
+      },
+      success: 'Канал переименован',
+    },
+    deleteChannel: {
+      error: {
+        network: 'Ошибка сети',
+      },
+      success: 'Канал удалён',
+    },
   }
 };
 

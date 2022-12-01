@@ -8,6 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import { fetchChannels, selectors, actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 import { useTranslation } from 'react-i18next';
+// import { toast } from 'react-toastify';
 
 const Channels = ({ socket }) => {
   const dispatch = useDispatch();

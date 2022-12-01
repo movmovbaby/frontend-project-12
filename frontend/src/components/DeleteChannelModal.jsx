@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { actions as modalActions } from '../slices/modalSlice.js';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+
 
 const DeleteChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { channelId } = useSelector((state) => state.modal.extra);
 
 
@@ -16,13 +20,13 @@ const DeleteChannelModal = ({ socket }) => {
   }
 
   const deleteChannel = (channelId) => {
-    console.log('delete channel function')
     socket.timeout(3000).emit('removeChannel', { id: channelId }, (error) => {
       if (error) {
-        console.log('Ошибка сети');
+        console.log(t('deleteChannel.errors.network'));
       } else {
         setModalShow(false);
         dispatch(modalActions.closeModal());
+        toast.success(t('deleteChannel.success'))
       }
     });
   };

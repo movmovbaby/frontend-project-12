@@ -35,18 +35,18 @@ const AddChannelModal = ({ socket }) => {
       const isntUnique = channelsNames.some((channelName) => channelName === name);
 
       if (isntUnique) {
-        formik.setErrors({ 'name': t('addChannelErrors.uniqueName') });
+        formik.setErrors({ 'name': t('addChannel.errors.uniqueName') });
         return;
       }
 
       socket.timeout(3000).emit('newChannel', { name }, (error) => {
         if (error) {
-          formik.setErrors({ 'name': t('addChannelErrors.network') });
+          formik.setErrors({ 'name': t('addChannel.errors.network') });
 
         } else {
           setModalShow(false);
           dispatch(modalActions.closeModal());
-          toast.success("Error");
+          toast.success(t('addChannel.success'));
         }
       });
     }
