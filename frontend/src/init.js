@@ -15,6 +15,7 @@ const init = async () => {
     accessToken: '74bc07850c6f47229b2c36a0b6b1a62f',
     captureUncaught: true,
     captureUnhandledRejections: true,
+    environment: 'production',
   }
 
 
