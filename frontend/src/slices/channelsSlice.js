@@ -36,12 +36,14 @@ const channelsSlice = createSlice({
         state.currentChannelId = action.payload.currentChannelId;
         channelsAdapter.addMany(state, action.payload.channels);
       })
-      .addCase(fetchChannels.rejected, (state) => {
+      .addCase(fetchChannels.rejected, (state, action) => {
         state.loadingStatus = 'failed';
+        state.error = action.error;
       });
   },
 });
 
 export const { actions } = channelsSlice;
+export const selectChannelsError = (state) => state.channelsInfo.error;
 export const selectors = channelsAdapter.getSelectors((state) => state.channelsInfo);
 export default channelsSlice.reducer;

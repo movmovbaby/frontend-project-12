@@ -6,9 +6,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/esm/Button';
 import { useTranslation } from 'react-i18next';
+import * as leoProfanity from 'leo-profanity';
 
 const MessageForm = ({ socket }) => {
   const { t } = useTranslation();
+  //const ruDict = leoProfanity.getDictionary('ru');
+  leoProfanity.loadDictionary('ru');
+
   const currentChannelId = useSelector(state => state.channelsInfo.currentChannelId);
   const formik = useFormik({
     initialValues: {
@@ -19,7 +23,9 @@ const MessageForm = ({ socket }) => {
     }),
     onSubmit: (values) => {
       formik.isSubmitting = true;
-      const message = { body: values.message, username: localStorage.getItem('username'), channelId: currentChannelId };
+      const filtredMessage = leoProfanity.clean(values.message);
+
+      const message = { body: filtredMessage, username: localStorage.getItem('username'), channelId: currentChannelId };
       socket.timeout(3000).emit('newMessage', message, (error) => {
         if (error) {
           console.log('Socket.io error while emit message');

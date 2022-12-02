@@ -5,16 +5,23 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
-import { fetchChannels, selectors, actions as channelsActions } from '../slices/channelsSlice.js';
+import { fetchChannels, selectors, selectChannelsError, actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 import { useTranslation } from 'react-i18next';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Channels = ({ socket }) => {
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
   const { t } = useTranslation();
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const channelsError = useSelector(selectChannelsError)
+
+  useEffect(() => {
+    if (channelsError) {
+      toast.error(t('channels.loadingError'));
+    }
+  }, [channelsError])
 
   useEffect(() => {
     dispatch(fetchChannels());
