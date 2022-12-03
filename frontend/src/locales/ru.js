@@ -16,9 +16,9 @@ const ru = {
       confirmPassword: 'Подтвердите пароль',
       submitButtonText: 'Зарегистрироваться',
       validationError: {
-        username: 'От 3 до 20 символов',
-        password: 'Не менее 6 символов',
-        confirmPassword: 'Пароли должны совпадать',
+        usernameField: 'От 3 до 20 символов',
+        passwordField: 'Не менее 6 символов',
+        confirmPasswordField: 'Пароли должны совпадать',
         userAlreadyExist: 'Такой пользователь уже существует',
       }
     },
