@@ -53,10 +53,10 @@ const LoginForm = () => {
       <FloatingLabel
         label={t('loginForm.usernameLabel')}
         className="mb-3"
+        controlId="username"
       >
         <Form.Control
           name="username"
-          id="username"
           type="text"
           autoComplete="username"
           required=""
@@ -71,10 +71,10 @@ const LoginForm = () => {
       <FloatingLabel
         label={t('loginForm.passwordLabel')}
         className="mb-4"
+        controlId="password"
       >
         <Form.Control
           name="password"
-          id="password"
           type="password"
           autoComplete="current-password"
           required=""
