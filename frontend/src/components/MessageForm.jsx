@@ -10,7 +10,6 @@ import * as leoProfanity from 'leo-profanity';
 
 const MessageForm = ({ socket }) => {
   const { t } = useTranslation();
-  //const ruDict = leoProfanity.getDictionary('ru');
   leoProfanity.loadDictionary('ru');
 
   const currentChannelId = useSelector(state => state.channelsInfo.currentChannelId);

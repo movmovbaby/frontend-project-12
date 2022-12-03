@@ -13,7 +13,6 @@ const DeleteChannelModal = ({ socket }) => {
   const { t } = useTranslation();
   const { channelId } = useSelector((state) => state.modal.extra);
 
-
   const closeModal = () => {
     setModalShow(false);
     dispatch(modalActions.closeModal());
