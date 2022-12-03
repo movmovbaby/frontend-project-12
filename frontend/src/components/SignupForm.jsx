@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import * as yup from 'yup';
-import routes from '../routes.js'
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/index.jsx";
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const SignupForm = () => {
     initialValues: {
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
     },
     validationSchema: yup.object().shape({
       username: yup
@@ -34,7 +34,7 @@ const SignupForm = () => {
       confirmPassword: yup
         .string()
         .required()
-        .oneOf([yup.ref('password'), null], t('signupForm.validationError.confirmPasswordField'))
+        .oneOf([yup.ref('password'), null], t('signupForm.validationError.confirmPasswordField')),
     }),
     onSubmit: async (values) => {
       const { username, password } = values;
@@ -42,8 +42,8 @@ const SignupForm = () => {
       try {
         const { data } = await axios.post(routes.signupPath(), { username, password });
         if (data) {
-          const { username, token } = data;
-          auth.setUserIn({ username, token });
+          const { name, token } = data;
+          auth.setUserIn({ username: name, token });
           auth.logIn();
           formik.setSubmitting(false);
           navigate('/');
@@ -61,8 +61,7 @@ const SignupForm = () => {
         }
       }
     },
-  })
-
+  });
 
   return (
     <Form className="w-50" onSubmit={formik.handleSubmit}>
@@ -94,7 +93,6 @@ const SignupForm = () => {
       >
         <Form.Control
           name="password"
-
           type="password"
           autoComplete="new-password"
           required
@@ -126,11 +124,11 @@ const SignupForm = () => {
           value={formik.values.confirmPassword}
           isInvalid={!!formik.errors.confirmPassword && formik.touched.confirmPassword}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>
       </FloatingLabel>
-      <Button type='submit' className="w-100" variant='outline-primary' disabled={formik.isSubmitting}>{t('signupForm.submitButtonText')}</Button>
+      <Button type="submit" className="w-100" variant="outline-primary" disabled={formik.isSubmitting}>{t('signupForm.submitButtonText')}</Button>
     </Form>
-  )
-}
+  );
+};
 
 export default SignupForm;

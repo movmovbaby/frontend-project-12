@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { actions as modalActions } from '../slices/modalSlice.js';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-
+import { actions as modalActions } from '../slices/modalSlice.js';
 
 const DeleteChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
@@ -16,16 +15,16 @@ const DeleteChannelModal = ({ socket }) => {
   const closeModal = () => {
     setModalShow(false);
     dispatch(modalActions.closeModal());
-  }
+  };
 
-  const deleteChannel = (channelId) => {
-    socket.timeout(3000).emit('removeChannel', { id: channelId }, (error) => {
+  const deleteChannel = (id) => {
+    socket.timeout(3000).emit('removeChannel', { id }, (error) => {
       if (error) {
         console.log(t('deleteChannel.errors.network'));
       } else {
         setModalShow(false);
         dispatch(modalActions.closeModal());
-        toast.success(t('deleteChannel.success'))
+        toast.success(t('deleteChannel.success'));
       }
     });
   };
@@ -39,15 +38,16 @@ const DeleteChannelModal = ({ socket }) => {
         <Modal.Title>Удалить канал?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Уверены?
-        <div className='d-flex justify-content-end'>
+        {t('deleteChannel.buttons.sure')}
+        <div className="d-flex justify-content-end">
           <Button className='me-2' onClick={() => closeModal()}>
-            Отменить</Button>
-          <Button variant='danger' onClick={() => deleteChannel(channelId)}>Удалить</Button>
+            {t('deleteChannel.buttons.delete')}
+          </Button>
+          <Button variant="danger" onClick={() => deleteChannel(channelId)}>Удалить</Button>
         </div>
       </Modal.Body>
     </Modal>
-  )
-}
+  );
+};
 
 export default DeleteChannelModal;

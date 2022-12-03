@@ -1,11 +1,12 @@
+import React from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
-import resources from './locales/index.js';
 import { Provider as StoreProvider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import store from './slices/index.js';
-import App from './components/App.jsx';
 import { io } from 'socket.io-client';
+import store from './slices/index.js';
+import resources from './locales/index.js';
+import App from './components/App.jsx';
 
 const init = async () => {
   const socket = io();
@@ -16,8 +17,7 @@ const init = async () => {
     captureUncaught: true,
     captureUnhandledRejections: true,
     environment: 'production',
-  }
-
+  };
 
   await i18nInstance
     .use(initReactI18next)
@@ -36,7 +36,7 @@ const init = async () => {
         </I18nextProvider>
       </ErrorBoundary>
     </RollbarProvider>
-  )
+  );
 };
 
 export default init;

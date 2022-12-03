@@ -15,9 +15,8 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       return { username, token };
     }
-    else {
-      return {}
-    }
+
+    return {};
   });
 
   const setUserIn = ({ username, token }) => {
@@ -34,7 +33,15 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut, user, setUserIn }}>
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        logIn,
+        logOut,
+        user,
+        setUserIn
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

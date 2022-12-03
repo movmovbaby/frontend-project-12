@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import routes from '../routes.js';
-import useAuth from "../hooks/index.jsx";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import useAuth from '../hooks/index.jsx';
 
 const LoginForm = () => {
   const auth = useAuth();
@@ -85,12 +85,12 @@ const LoginForm = () => {
           value={formik.values.password}
           isInvalid={!!loginError}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{t('loginForm.error')}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid" tooltip>{t('loginForm.error')}</Form.Control.Feedback>
       </FloatingLabel>
 
       <Button type="submit" variant="outline-primary">{t('loginForm.submitButtonText')}</Button>
     </Form>
-  )
+  );
 };
 
 export default LoginForm;

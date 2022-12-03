@@ -9,6 +9,9 @@ const ru = {
       footerText: 'Нет аккаунта?',
       footerLink: 'Регистрация',
     },
+    signupPage: {
+      imageAlt: 'Регистрация',
+    },
     signupForm: {
       title: 'Регистрация',
       usernameLabel: 'Имя пользователя',
@@ -20,7 +23,7 @@ const ru = {
         passwordField: 'Не менее 6 символов',
         confirmPasswordField: 'Пароли должны совпадать',
         userAlreadyExist: 'Такой пользователь уже существует',
-      }
+      },
     },
     navbar: {
       brand: 'Hexlet Chat',
@@ -33,7 +36,7 @@ const ru = {
       dropDownItem: {
         delete: 'Удалить',
         rename: 'Переименовать'
-      }
+      },
     },
     messagesHeader: {
       messagesCount_zero: '{{count}} сообщений',
@@ -53,6 +56,13 @@ const ru = {
       success: 'Канал создан',
     },
     renameChannel: {
+      form: {
+        label: 'Имя канала',
+      },
+      button: {
+        cancel: 'Отменить',
+        send: 'Отправить',
+      },
       error: {
         network: 'Ошибка сети',
         uniqueName: 'Имя должно быть уникальным',
@@ -60,6 +70,10 @@ const ru = {
       success: 'Канал переименован',
     },
     deleteChannel: {
+      buttons: {
+        sure: 'Уверены?',
+        cancel: 'Отменить'
+      },
       error: {
         network: 'Ошибка сети',
       },

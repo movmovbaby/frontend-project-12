@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 import ErrorPage from './ErrorPage.jsx';
 import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -19,19 +24,19 @@ const App = ({ socket }) => (
     <BrowserRouter>
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={(
             <PrivateRoute>
               <Chat socket={socket} />
             </PrivateRoute>
           )}
         />
-        <Route path='login' element={<LoginPage />} />
-        <Route path='signup' element={<SignupPage />} />
-        <Route path='*' element={<ErrorPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
-  </AuthProvider >
+  </AuthProvider>
 );
 
 export default App;
