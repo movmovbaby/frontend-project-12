@@ -62,16 +62,16 @@ const Channels = ({ socket }) => {
         <span className='me-1'>#</span>{channel.name}
       </Button>
       <Dropdown.Toggle split className='flex-grow-0 ' variant={isActive ? 'secondary' : 'light'}>
-        <span className='visually-hidden'>t('channels.manage')</span>
+        <span className='visually-hidden'>{t('channels.manage')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item
           onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: channel.id } }))}>
-          Удалить
+          {t('channels.dropDownItem.delete')}
         </Dropdown.Item>
         <Dropdown.Item
           onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: channel.id } }))}>
-          Переименовать
+          {t('channels.dropDownItem.rename')}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown >

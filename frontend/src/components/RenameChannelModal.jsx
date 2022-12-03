@@ -80,7 +80,7 @@ const RenameChannelModal = ({ socket }) => {
               autoFocus={true}
               isInvalid={!!formik.errors.name}
             />
-            <Form.Label visuallyHidden>Имя канала</Form.Label>
+            <Form.Label htmlFor="name" visuallyHidden>Имя канала</Form.Label>
             {formik.errors.name ? (
               < Form.Control.Feedback type="invalid">
                 {formik.errors.name}

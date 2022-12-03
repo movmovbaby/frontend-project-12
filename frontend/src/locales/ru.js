@@ -30,6 +30,10 @@ const ru = {
       title: 'Каналы',
       manage: 'Управление каналом',
       loadingError: 'Ошибка соединения',
+      dropDownItem: {
+        delete: 'Удалить',
+        rename: 'Переименовать'
+      }
     },
     messagesHeader: {
       messagesCount_zero: '{{count}} сообщений',
