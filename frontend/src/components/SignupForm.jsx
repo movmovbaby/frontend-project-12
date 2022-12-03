@@ -36,7 +36,6 @@ const SignupForm = () => {
         .required()
         .oneOf([yup.ref('password'), null], t('signupForm.validationError.confirmPasswordField'))
     }),
-    validateOnChange: false,
     onSubmit: async (values) => {
       const { username, password } = values;
       formik.setSubmitting(true);
