@@ -71,7 +71,7 @@ const RenameChannelModal = ({ socket }) => {
           <Form.Group>
             <Form.Control
               id="name"
-              name="name'"
+              name="name"
               className="mb-2"
               value={formik.values.name}
               onChange={formik.handleChange}
