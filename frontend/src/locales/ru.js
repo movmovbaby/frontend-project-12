@@ -35,7 +35,7 @@ const ru = {
       loadingError: 'Ошибка соединения',
       dropDownItem: {
         delete: 'Удалить',
-        rename: 'Переименовать'
+        rename: 'Переименовать',
       },
     },
     messagesHeader: {
@@ -72,14 +72,14 @@ const ru = {
     deleteChannel: {
       buttons: {
         sure: 'Уверены?',
-        cancel: 'Отменить'
+        cancel: 'Отменить',
       },
       error: {
         network: 'Ошибка сети',
       },
       success: 'Канал удалён',
     },
-  }
+  },
 };
 
 export default ru;

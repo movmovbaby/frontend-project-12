@@ -3,10 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
+import { useTranslation } from 'react-i18next';
 import SignupForm from './SignupForm.jsx';
 import Wrapper from './Wrapper.jsx';
 import image from '../assets/signup_man.jpg';
-import { useTranslation } from 'react-i18next';
 
 const SignupPage = () => {
   const { t } = useTranslation();

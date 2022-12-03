@@ -56,11 +56,12 @@ const AddChannelModal = ({ socket }) => {
       <Modal
         show={modalShow}
         onHide={() => closeModal()}
-        size='m'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered>
+        size="m"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>
+          <Modal.Title id="contained-modal-title-vcenter">
             Добавить канал
           </Modal.Title>
         </Modal.Header>
@@ -74,16 +75,18 @@ const AddChannelModal = ({ socket }) => {
                 value={formik.values.message}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                autoComplete='name'
+                autoComplete="name"
                 disable={formik.isSubmitting}
-                autoFocus={true}
+                autoFocus
                 isInvalid={!!formik.errors.name}
               />
               <Form.Label htmlFor="name" visuallyHidden>Имя канала</Form.Label>
-              {formik.errors.name ? (
-                <Form.Control.Feedback type="invalid">
-                  {formik.errors.name}
-                </Form.Control.Feedback>) : null}
+              {formik.errors.name
+                ? (
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.name}
+                  </Form.Control.Feedback>
+                ) : null}
               <div className="d-flex justify-content-end">
                 <Button
                   className="me-2"

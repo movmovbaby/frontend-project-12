@@ -53,10 +53,10 @@ const SignupForm = () => {
 
         if (error.name === 'AxiosError') {
           formik.setSubmitting(false);
-          formik.setErrors({ 'username': '    ' });
-          formik.setErrors({ 'password': '    ' });
-          formik.setErrors({ 'confirmPassword': t('signupForm.validationError.userAlreadyExist') });
-          console.log('Formik', formik)
+          formik.setErrors({ username: '    ' });
+          formik.setErrors({ password: '    ' });
+          formik.setErrors({ confirmPassword: t('signupForm.validationError.userAlreadyExist') });
+          console.log('Formik', formik);
           console.log('Signup failed');
         }
       }
@@ -83,7 +83,7 @@ const SignupForm = () => {
           value={formik.values.username}
           isInvalid={!!formik.errors.username && formik.touched.username}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{formik.errors.username}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid" tooltip>{formik.errors.username}</Form.Control.Feedback>
       </FloatingLabel>
 
       <FloatingLabel
@@ -104,7 +104,7 @@ const SignupForm = () => {
           value={formik.values.password}
           isInvalid={!!formik.errors.password && formik.touched.password}
         />
-        <Form.Control.Feedback type='invalid' tooltip>{formik.errors.password}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid" tooltip>{formik.errors.password}</Form.Control.Feedback>
       </FloatingLabel>
 
       <FloatingLabel

@@ -3,8 +3,8 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate
-} from "react-router-dom";
+  Navigate,
+} from 'react-router-dom';
 import ErrorPage from './ErrorPage.jsx';
 import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';

@@ -7,7 +7,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { fetchChannels, selectors, selectChannelsError, actions as channelsActions } from '../slices/channelsSlice.js';
+import {
+  fetchChannels,
+  selectors,
+  selectChannelsError,
+  actions as channelsActions,
+} from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 
 const Channels = ({ socket }) => {
@@ -48,10 +53,11 @@ const Channels = ({ socket }) => {
     return (
       <button
         type="button"
-        className={isActive ? "w-100 rounded-0 text-start btn btn-secondary" : "w-100 rounded-0 text-start btn"}
+        className={isActive ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}
         onClick={() => dispatch(channelsActions.setActiveChannel(id))}
       >
-        <span className="me-1">#</span>{name}
+        <span className="me-1">#</span>
+        {name}
       </button>
     );
   };
@@ -61,28 +67,31 @@ const Channels = ({ socket }) => {
     return (
       <Dropdown as={ButtonGroup} className="d-flex dropdown btn-group">
         <Button
-          className={isActive ? "w-100 rounded-0 text-start text-truncate" : "w-100 rounded-0 text-start text-truncate"}
+          className={isActive ? 'w-100 rounded-0 text-start text-truncate' : 'w-100 rounded-0 text-start text-truncate'}
           onClick={() => dispatch(channelsActions.setActiveChannel(id))}
-          variant={isActive ? "secondary" : "light"}
+          variant={isActive ? 'secondary' : 'light'}
         >
-          <span className="me-1">#</span>{name}
+          <span className="me-1">#</span>
+          {name}
         </Button>
-        <Dropdown.Toggle split className="flex-grow-0" variant={isActive ? "secondary" : "light"}>
+        <Dropdown.Toggle split className="flex-grow-0" variant={isActive ? 'secondary' : 'light'}>
           <span className="visually-hidden">{t('channels.manage')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: id } }))}>
+            onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: id } }))}
+          >
             {t('channels.dropDownItem.delete')}
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: id } }))}>
+            onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: id } }))}
+          >
             {t('channels.dropDownItem.rename')}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    )
-  }
+    );
+  };
 
   return channels && (
     <>
@@ -104,7 +113,9 @@ const Channels = ({ socket }) => {
       <Nav variant="pills" className="flex-column nav-fill px-2" as="ul">
         {channels.map(({ id, name, removable }) => {
           const isActive = activeChannelId === id;
-          const item = removable ? RemovableButton({ id, name, removable }, isActive) : SimpleButton({ id, name, removable }, isActive);
+          const item = removable
+            ? RemovableButton({ id, name, removable }, isActive)
+            : SimpleButton({ id, name, removable }, isActive);
 
           return (
             <Nav.Item key={id} as="li" className="w-100">
@@ -114,7 +125,7 @@ const Channels = ({ socket }) => {
         })}
       </Nav>
     </>
-  )
+  );
 };
 
 export default Channels;

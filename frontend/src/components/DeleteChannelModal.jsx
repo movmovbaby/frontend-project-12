@@ -33,14 +33,15 @@ const DeleteChannelModal = ({ socket }) => {
     <Modal
       show={modalShow}
       onHide={() => closeModal()}
-      centered>
+      centered
+    >
       <Modal.Header>
         <Modal.Title>Удалить канал?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {t('deleteChannel.buttons.sure')}
         <div className="d-flex justify-content-end">
-          <Button className='me-2' onClick={() => closeModal()}>
+          <Button className="me-2" onClick={() => closeModal()}>
             {t('deleteChannel.buttons.delete')}
           </Button>
           <Button variant="danger" onClick={() => deleteChannel(channelId)}>Удалить</Button>

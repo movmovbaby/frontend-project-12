@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import NavBar from '../components/NavBar.jsx';
+import NavBar from './NavBar.jsx';
 
 const Wrapper = ({ children }) => (
   <div className="h-100">

@@ -78,16 +78,20 @@ const RenameChannelModal = ({ socket }) => {
               onBlur={formik.handleBlur}
               autoComplete="name"
               disable={formik.isSubmitting}
-              autoFocus={true}
+              autoFocus
               isInvalid={!!formik.errors.name}
             />
             <Form.Label htmlFor="name" visuallyHidden>{t('renameChannel.form.label')}</Form.Label>
-            {formik.errors.name ? (
-              <Form.Control.Feedback type="invalid">
-                {formik.errors.name}
-              </Form.Control.Feedback>) : null}
+            {formik.errors.name
+              ? (
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.name}
+                </Form.Control.Feedback>
+              )
+              : null}
             <div className="d-flex justify-content-end">
-              <Button className="me-2"
+              <Button
+                className="me-2"
                 onClick={() => closeModal()}
                 variant="secondary"
               >

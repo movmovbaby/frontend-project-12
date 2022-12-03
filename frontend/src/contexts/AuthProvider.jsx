@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('username', username);
     localStorage.setItem('token', token);
     return setUser(username, token);
-  }
+  };
 
   const logIn = () => setLoggedIn(true);
 
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         logIn,
         logOut,
         user,
-        setUserIn
+        setUserIn,
       }}
     >
       {children}

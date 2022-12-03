@@ -31,7 +31,9 @@ const MessageForm = ({ socket }) => {
           formik.isSubmitting = false;
         } else {
           formik.isSubmitting = false;
+          /* eslint-disable no-param-reassign */
           values.message = '';
+          /* eslint-enable no-param-reassign */
         }
       });
     },
@@ -39,7 +41,7 @@ const MessageForm = ({ socket }) => {
 
   return (
     <Form className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
-      <InputGroup >
+      <InputGroup>
         <Form.Control
           className="border-0 p-0 ps-2 form-control"
           placeholder={t('messagesForm.placeholder')}
