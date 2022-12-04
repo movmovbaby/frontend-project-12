@@ -15,8 +15,8 @@ const NavBar = () => {
     <Navbar bg="white" expand="lg" className="shadow-sm">
       <Container>
         <Navbar.Brand as={Link} to="/">{t('navbar.brand')}</Navbar.Brand>
-        {auth.loggedIn &&
-          (
+        {auth.loggedIn
+          && (
             <Button
               variant="primary"
               onClick={() => {
