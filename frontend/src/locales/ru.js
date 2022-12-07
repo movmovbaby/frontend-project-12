@@ -1,5 +1,8 @@
 const ru = {
   translation: {
+    loginPage: {
+      imageAlt: 'Войти',
+    },
     loginForm: {
       title: 'Войти',
       error: 'Неверные имя пользователя или пароль',
@@ -49,6 +52,14 @@ const ru = {
       submitButton: 'Отправить',
     },
     addChannel: {
+      title: 'Добавить канал',
+      form: {
+        label: 'Имя канала',
+      },
+      button: {
+        cancel: 'Отменить',
+        send: 'Отправить',
+      },
       errors: {
         network: 'Ошибка сети',
         uniqueName: 'Имя должно быть уникальным',
@@ -56,6 +67,7 @@ const ru = {
       success: 'Канал создан',
     },
     renameChannel: {
+      title: 'Переименовать канал',
       form: {
         label: 'Имя канала',
       },
@@ -70,8 +82,9 @@ const ru = {
       success: 'Канал переименован',
     },
     deleteChannel: {
-      buttons: {
-        sure: 'Уверены?',
+      title: 'Удалить канал?',
+      button: {
+        delete: 'Удалить',
         cancel: 'Отменить',
       },
       error: {

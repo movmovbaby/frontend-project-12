@@ -63,7 +63,7 @@ const RenameChannelModal = ({ socket }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Переименовать канал
+          {t('renameChannel.title')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -77,7 +77,7 @@ const RenameChannelModal = ({ socket }) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               autoComplete="name"
-              disable={formik.isSubmitting}
+              disable={formik.isSubmitting.toString()}
               autoFocus
               isInvalid={!!formik.errors.name}
             />
@@ -97,7 +97,7 @@ const RenameChannelModal = ({ socket }) => {
               >
                 {t('renameChannel.button.cancel')}
               </Button>
-              <Button type="submit">{t('renameChannel.button.send')}</Button>
+              <Button type="submit" disable={formik.isSubmitting.toString()}>{t('renameChannel.button.send')}</Button>
             </div>
           </Form.Group>
         </Form>

@@ -21,7 +21,7 @@ const LoginPage = () => {
                   <Image
                     src={image}
                     roundedCircle
-                    alt="Войти"
+                    alt={t('loginPage.imageAlt')}
                   />
                 </div>
                 <LoginForm />

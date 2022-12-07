@@ -62,7 +62,7 @@ const AddChannelModal = ({ socket }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Добавить канал
+            {t('addChannel.title')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -76,11 +76,11 @@ const AddChannelModal = ({ socket }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 autoComplete="name"
-                disable={formik.isSubmitting}
+                disable={formik.isSubmitting.toString()}
                 autoFocus
                 isInvalid={!!formik.errors.name}
               />
-              <Form.Label htmlFor="name" visuallyHidden>Имя канала</Form.Label>
+              <Form.Label htmlFor="name" visuallyHidden>{t('addChannel.form.label')}</Form.Label>
               {formik.errors.name
                 ? (
                   <Form.Control.Feedback type="invalid">
@@ -93,9 +93,9 @@ const AddChannelModal = ({ socket }) => {
                   onClick={() => closeModal()}
                   variant="secondary"
                 >
-                  Отменить
+                  {t('addChannel.button.cancel')}
                 </Button>
-                <Button type="submit">Отправить</Button>
+                <Button type="submit" disable={formik.isSubmitting.toString()}>{t('addChannel.button.send')}</Button>
               </div>
             </Form.Group>
           </Form>

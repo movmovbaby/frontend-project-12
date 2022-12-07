@@ -31,9 +31,8 @@ const MessageForm = ({ socket }) => {
           formik.isSubmitting = false;
         } else {
           formik.isSubmitting = false;
-          /* eslint-disable no-param-reassign */
+          /* eslint-disable-next-line no-param-reassign */
           values.message = '';
-          /* eslint-enable no-param-reassign */
         }
       });
     },

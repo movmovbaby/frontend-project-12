@@ -60,7 +60,7 @@ const LoginForm = () => {
           type="text"
           autoComplete="username"
           required=""
-          placeholder="Ваш ник"
+          placeholder={t('loginForm.usernameLabel')}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.username}
@@ -78,7 +78,7 @@ const LoginForm = () => {
           type="password"
           autoComplete="current-password"
           required=""
-          placeholder="Пароль"
+          placeholder={t('loginForm.passwordLabel')}
           className="form-control"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -88,7 +88,7 @@ const LoginForm = () => {
         <Form.Control.Feedback type="invalid" tooltip>{t('loginForm.error')}</Form.Control.Feedback>
       </FloatingLabel>
 
-      <Button type="submit" variant="outline-primary">{t('loginForm.submitButtonText')}</Button>
+      <Button type="submit" variant="outline-primary" disabled={formik.isSubmitting}>{t('loginForm.submitButtonText')}</Button>
     </Form>
   );
 };

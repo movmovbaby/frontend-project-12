@@ -77,7 +77,7 @@ const SignupForm = () => {
           type="text"
           autoComplete="username"
           required
-          placeholder="Имя пользователя"
+          placeholder={t('signupForm.usernameLabel')}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.username}
@@ -96,7 +96,7 @@ const SignupForm = () => {
           type="password"
           autoComplete="new-password"
           required
-          placeholder="Пароль"
+          placeholder={t('signupForm.usernameLabel')}
           className="form-control"
           aria-describedby="passwordHelpBlock"
           onChange={formik.handleChange}
@@ -117,7 +117,7 @@ const SignupForm = () => {
           type="password"
           autoComplete="new-password"
           required
-          placeholder="Подтвердите пароль"
+          placeholder={t('signupForm.confirmPassword')}
           className="form-control"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
