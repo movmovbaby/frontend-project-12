@@ -43,7 +43,6 @@ const AddChannelModal = ({ socket }) => {
         if (error) {
           formik.setErrors({ name: t('addChannel.errors.network') });
         } else {
-          console.log("SERVER RESPONSE", response);
           dispatch(channelsActions.setActiveChannel(response.data.id));
           dispatch(modalActions.closeModal());
           toast.success(t('addChannel.success'));
