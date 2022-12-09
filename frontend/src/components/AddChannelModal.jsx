@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectors } from '../slices/channelsSlice.js';
+import { selectors, actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 
 const AddChannelModal = ({ socket }) => {
@@ -39,11 +39,12 @@ const AddChannelModal = ({ socket }) => {
         return;
       }
 
-      socket.timeout(3000).emit('newChannel', { name }, (error) => {
+      socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
         if (error) {
           formik.setErrors({ name: t('addChannel.errors.network') });
         } else {
-          setModalShow(false);
+          console.log("SERVER RESPONSE", response);
+          dispatch(channelsActions.setActiveChannel(response.data.id));
           dispatch(modalActions.closeModal());
           toast.success(t('addChannel.success'));
         }

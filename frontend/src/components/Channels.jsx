@@ -34,7 +34,6 @@ const Channels = ({ socket }) => {
 
   socket.on('newChannel', (channel) => {
     dispatch(channelsActions.addChannel(channel));
-    dispatch(channelsActions.setActiveChannel(channel.id));
   });
 
   socket.on('removeChannel', (channelId) => {
