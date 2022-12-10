@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import AuthContext from './index.jsx';
 
 const AuthProvider = ({ children }) => {
@@ -31,16 +31,17 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
   };
+  const auth = useMemo(() => ({
+    loggedIn,
+    logIn,
+    logOut,
+    user,
+    setUserIn,
+  }), []);
 
   return (
     <AuthContext.Provider
-      value={{
-        loggedIn,
-        logIn,
-        logOut,
-        user,
-        setUserIn,
-      }}
+      value={auth}
     >
       {children}
     </AuthContext.Provider>

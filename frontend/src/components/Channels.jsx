@@ -15,6 +15,56 @@ import {
 } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 
+const SimpleButton = (channel, isActive) => {
+  const dispatch = useDispatch();
+  const { id, name } = channel;
+
+  return (
+    <button
+      type="button"
+      className={isActive ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}
+      onClick={() => dispatch(channelsActions.setActiveChannel(id))}
+    >
+      <span className="me-1">#</span>
+      {name}
+    </button>
+  );
+};
+
+const RemovableButton = (channel, isActive) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { id, name } = channel;
+
+  return (
+    <Dropdown as={ButtonGroup} className="d-flex dropdown btn-group">
+      <Button
+        className={isActive ? 'w-100 rounded-0 text-start text-truncate' : 'w-100 rounded-0 text-start text-truncate'}
+        onClick={() => dispatch(channelsActions.setActiveChannel(id))}
+        variant={isActive ? 'secondary' : 'light'}
+      >
+        <span className="me-1">#</span>
+        {name}
+      </Button>
+      <Dropdown.Toggle split className="flex-grow-0" variant={isActive ? 'secondary' : 'light'}>
+        <span className="visually-hidden">{t('channels.manage')}</span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item
+          onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: id } }))}
+        >
+          {t('channels.dropDownItem.delete')}
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: id } }))}
+        >
+          {t('channels.dropDownItem.rename')}
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
+
 const Channels = ({ socket }) => {
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
@@ -45,52 +95,6 @@ const Channels = ({ socket }) => {
   socket.on('renameChannel', ({ id, name }) => {
     dispatch(channelsActions.updateChannel({ id, changes: { name } }));
   });
-
-  const SimpleButton = (channel, isActive) => {
-    const { id, name } = channel;
-
-    return (
-      <button
-        type="button"
-        className={isActive ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}
-        onClick={() => dispatch(channelsActions.setActiveChannel(id))}
-      >
-        <span className="me-1">#</span>
-        {name}
-      </button>
-    );
-  };
-
-  const RemovableButton = (channel, isActive) => {
-    const { id, name } = channel;
-    return (
-      <Dropdown as={ButtonGroup} className="d-flex dropdown btn-group">
-        <Button
-          className={isActive ? 'w-100 rounded-0 text-start text-truncate' : 'w-100 rounded-0 text-start text-truncate'}
-          onClick={() => dispatch(channelsActions.setActiveChannel(id))}
-          variant={isActive ? 'secondary' : 'light'}
-        >
-          <span className="me-1">#</span>
-          {name}
-        </Button>
-        <Dropdown.Toggle split className="flex-grow-0" variant={isActive ? 'secondary' : 'light'}>
-          <span className="visually-hidden">{t('channels.manage')}</span>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={() => dispatch(modalActions.openModal({ type: 'deleteChannel', extra: { channelId: id } }))}
-          >
-            {t('channels.dropDownItem.delete')}
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => dispatch(modalActions.openModal({ type: 'renameChannel', extra: { channelId: id } }))}
-          >
-            {t('channels.dropDownItem.rename')}
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
 
   return channels && (
     <>

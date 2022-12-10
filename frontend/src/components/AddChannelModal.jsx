@@ -52,56 +52,54 @@ const AddChannelModal = ({ socket }) => {
   });
 
   return (
-    <>
-      <Modal
-        show={modalShow}
-        onHide={() => closeModal()}
-        size="m"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            {t('addChannel.title')}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group>
-              <Form.Control
-                id="name"
-                name="name"
-                className="mb-2"
-                value={formik.values.message}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                autoComplete="name"
-                disable={formik.isSubmitting.toString()}
-                autoFocus
-                isInvalid={!!formik.errors.name}
-              />
-              <Form.Label htmlFor="name" visuallyHidden>{t('addChannel.form.label')}</Form.Label>
-              {formik.errors.name
-                ? (
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.name}
-                  </Form.Control.Feedback>
-                ) : null}
-              <div className="d-flex justify-content-end">
-                <Button
-                  className="me-2"
-                  onClick={() => closeModal()}
-                  variant="secondary"
-                >
-                  {t('addChannel.button.cancel')}
-                </Button>
-                <Button type="submit" disable={formik.isSubmitting.toString()}>{t('addChannel.button.send')}</Button>
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Modal
+      show={modalShow}
+      onHide={() => closeModal()}
+      size="m"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          {t('addChannel.title')}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              id="name"
+              name="name"
+              className="mb-2"
+              value={formik.values.message}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              autoComplete="name"
+              disable={formik.isSubmitting.toString()}
+              autoFocus
+              isInvalid={!!formik.errors.name}
+            />
+            <Form.Label htmlFor="name" visuallyHidden>{t('addChannel.form.label')}</Form.Label>
+            {formik.errors.name
+              ? (
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.name}
+                </Form.Control.Feedback>
+              ) : null}
+            <div className="d-flex justify-content-end">
+              <Button
+                className="me-2"
+                onClick={() => closeModal()}
+                variant="secondary"
+              >
+                {t('addChannel.button.cancel')}
+              </Button>
+              <Button type="submit" disable={formik.isSubmitting.toString()}>{t('addChannel.button.send')}</Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

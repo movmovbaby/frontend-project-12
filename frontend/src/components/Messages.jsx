@@ -24,31 +24,29 @@ const Messages = ({ socket }) => {
   const channelsMessages = messages.filter((message) => message.channelId === activeChannelId);
 
   return channelsMessages && (
-    <>
-      <div className="d-flex flex-column h-100">
-        <div className="bg-light mb-4 p-3 shadow-sm small">
-          <p className="m-0">
-            <b>
-              #&nbsp;
-              {activeChannel && activeChannel.name}
-            </b>
-          </p>
-          <span className="text-muted">{t('messagesHeader.messagesCount', { count: channelsMessages.length })}</span>
-        </div>
-        <div id="message-box" className="chat-messages overflow-auto px-5">
-          {channelsMessages.map(({ id, body, username }) => (
-            <div className="text-break mb-2" key={id}>
-              <b>{username}</b>
-              :&nbsp;
-              {body}
-            </div>
-          ))}
-        </div>
-        <div className="mt-auto px-5 py-3">
-          <MessageForm socket={socket} />
-        </div>
+    <div className="d-flex flex-column h-100">
+      <div className="bg-light mb-4 p-3 shadow-sm small">
+        <p className="m-0">
+          <b>
+            #&nbsp;
+            {activeChannel && activeChannel.name}
+          </b>
+        </p>
+        <span className="text-muted">{t('messagesHeader.messagesCount', { count: channelsMessages.length })}</span>
       </div>
-    </>
+      <div id="message-box" className="chat-messages overflow-auto px-5">
+        {channelsMessages.map(({ id, body, username }) => (
+          <div className="text-break mb-2" key={id}>
+            <b>{username}</b>
+            :&nbsp;
+            {body}
+          </div>
+        ))}
+      </div>
+      <div className="mt-auto px-5 py-3">
+        <MessageForm socket={socket} />
+      </div>
+    </div>
   );
 };
 
