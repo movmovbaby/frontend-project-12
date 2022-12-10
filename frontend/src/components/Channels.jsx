@@ -15,7 +15,8 @@ import {
 } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
 
-const SimpleButton = (channel, isActive) => {
+const SimpleButton = (props) => {
+  const { channel, isActive } = props;
   const dispatch = useDispatch();
   const { id, name } = channel;
 
@@ -31,7 +32,8 @@ const SimpleButton = (channel, isActive) => {
   );
 };
 
-const RemovableButton = (channel, isActive) => {
+const RemovableButton = (props) => {
+  const { channel, isActive } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { id, name } = channel;
@@ -117,8 +119,8 @@ const Channels = ({ socket }) => {
         {channels.map(({ id, name, removable }) => {
           const isActive = activeChannelId === id;
           const item = removable
-            ? RemovableButton({ id, name, removable }, isActive)
-            : SimpleButton({ id, name, removable }, isActive);
+            ? <RemovableButton channel={{ id, name, removable }} isActive={isActive} />
+            : <SimpleButton channel={{ id, name, removable }} isActive={isActive} />;
 
           return (
             <Nav.Item key={id} as="li" className="w-100">
