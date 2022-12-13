@@ -91,7 +91,6 @@ const Channels = ({ socket }) => {
   socket.on('removeChannel', (channelId) => {
     const { id } = channelId;
     dispatch(channelsActions.deleteChannel(id));
-    dispatch(channelsActions.setActiveChannel(1));
   });
 
   socket.on('renameChannel', ({ id, name }) => {

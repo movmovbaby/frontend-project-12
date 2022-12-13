@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import Wrapper from './Wrapper.jsx';
-import Modal from './Modal.jsx';
+import Modal from './Modals/Modal.jsx';
 
 const Chat = ({ socket }) => {
   const isOpened = useSelector((state) => state.modal.isOpened);

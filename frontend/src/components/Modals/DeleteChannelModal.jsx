@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { actions as modalActions } from '../slices/modalSlice.js';
+import { actions as modalActions } from '../../slices/modalSlice.js';
+import { actions as channelsActions } from '../../slices/channelsSlice.js';
 
 const DeleteChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
@@ -18,11 +19,11 @@ const DeleteChannelModal = ({ socket }) => {
   };
 
   const deleteChannel = (id) => {
-    socket.timeout(3000).emit('removeChannel', { id }, (error) => {
+    socket.timeout(3000).emit('removeChannel', { id }, (error, response) => {
       if (error) {
         console.log(t('deleteChannel.errors.network'));
       } else {
-        setModalShow(false);
+        dispatch(channelsActions.setActiveChannel(1));
         dispatch(modalActions.closeModal());
         toast.success(t('deleteChannel.success'));
       }

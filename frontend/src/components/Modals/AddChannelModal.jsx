@@ -7,8 +7,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectors, actions as channelsActions } from '../slices/channelsSlice.js';
-import { actions as modalActions } from '../slices/modalSlice.js';
+import { selectors, actions as channelsActions } from '../../slices/channelsSlice.js';
+import { actions as modalActions } from '../../slices/modalSlice.js';
 
 const AddChannelModal = ({ socket }) => {
   const [modalShow, setModalShow] = useState(true);
