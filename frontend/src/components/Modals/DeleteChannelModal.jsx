@@ -19,7 +19,7 @@ const DeleteChannelModal = ({ socket }) => {
   };
 
   const deleteChannel = (id) => {
-    socket.timeout(3000).emit('removeChannel', { id }, (error, response) => {
+    socket.timeout(3000).emit('removeChannel', { id }, (error) => {
       if (error) {
         console.log(t('deleteChannel.errors.network'));
       } else {

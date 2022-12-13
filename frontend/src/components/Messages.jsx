@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchMessages, selectors, actions as messagesActions } from '../slices/messagesSlice.js';
+import { fetchMessages, selectors } from '../slices/messagesSlice.js';
 import MessageForm from './MessageForm.jsx';
 import { selectors as channelsSelector } from '../slices/channelsSlice.js';
 
@@ -13,10 +13,6 @@ const Messages = ({ socket }) => {
   useEffect(() => {
     dispatch(fetchMessages());
   }, [dispatch]);
-
-  socket.on('newMessage', (msg) => {
-    dispatch(messagesActions.addMessage(msg));
-  });
 
   const messages = useSelector(selectors.selectAll);
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);

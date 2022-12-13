@@ -67,7 +67,7 @@ const RemovableButton = (props) => {
   );
 };
 
-const Channels = ({ socket }) => {
+const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
   const { t } = useTranslation();
@@ -83,19 +83,6 @@ const Channels = ({ socket }) => {
   useEffect(() => {
     dispatch(fetchChannels());
   }, [dispatch]);
-
-  socket.on('newChannel', (channel) => {
-    dispatch(channelsActions.addChannel(channel));
-  });
-
-  socket.on('removeChannel', (channelId) => {
-    const { id } = channelId;
-    dispatch(channelsActions.deleteChannel(id));
-  });
-
-  socket.on('renameChannel', ({ id, name }) => {
-    dispatch(channelsActions.updateChannel({ id, changes: { name } }));
-  });
 
   return channels && (
     <>
