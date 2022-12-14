@@ -10,12 +10,14 @@ import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
 import AuthProvider from '../contexts/AuthProvider.jsx';
+import useAuth from '../hooks/index.jsx';
 
 const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const auth = useAuth();
 
   return (
-    token !== null ? children : <Navigate to="/login" />
+    auth.loggedIn ? children : <Navigate to="/login" />
   );
 };
 
