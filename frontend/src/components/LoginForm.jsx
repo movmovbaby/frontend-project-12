@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from '../routes.js';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const LoginForm = () => {
   const auth = useAuth();

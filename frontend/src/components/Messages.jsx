@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { selectors, actions as messagesActions } from '../slices/messagesSlice.js';
 import MessageForm from './MessageForm.jsx';
 import { selectors as channelsSelector } from '../slices/channelsSlice.js';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const Messages = ({ socket }) => {

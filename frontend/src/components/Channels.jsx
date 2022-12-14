@@ -8,9 +8,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
-
 import { toast } from 'react-toastify';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import {
   selectors,
   selectChannelsError,

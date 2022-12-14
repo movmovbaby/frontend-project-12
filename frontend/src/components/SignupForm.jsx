@@ -7,7 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const SignupForm = () => {

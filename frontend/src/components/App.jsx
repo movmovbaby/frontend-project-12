@@ -10,7 +10,7 @@ import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
 import AuthProvider from '../contexts/AuthProvider.jsx';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();

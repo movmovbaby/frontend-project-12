@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/esm/Button';
 import { useTranslation } from 'react-i18next';
 import * as leoProfanity from 'leo-profanity';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 
 const MessageForm = ({ socket }) => {
   const { t } = useTranslation();
