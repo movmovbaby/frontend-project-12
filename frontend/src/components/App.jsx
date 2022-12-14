@@ -13,7 +13,6 @@ import AuthProvider from '../contexts/AuthProvider.jsx';
 import useAuth from '../hooks/index.jsx';
 
 const PrivateRoute = ({ children }) => {
-  // const token = localStorage.getItem('token');
   const auth = useAuth();
 
   return (

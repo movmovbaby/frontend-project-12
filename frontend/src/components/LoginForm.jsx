@@ -31,8 +31,7 @@ const LoginForm = () => {
         const response = await axios.post(routes.loginPath(), values);
         if (response.data) {
           const { username, token } = response.data;
-          localStorage.setItem('username', username);
-          localStorage.setItem('token', token);
+          auth.setUserIn({ username, token });
           formik.setSubmitting(false);
           auth.logIn();
           navigate('/');

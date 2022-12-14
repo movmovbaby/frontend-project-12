@@ -9,20 +9,19 @@ const AuthProvider = ({ children }) => {
     return false;
   });
 
-  const [user, setUser] = useState(() => {
+  const [userData, setUserData] = useState(() => {
     const username = localStorage.getItem('username');
     if (username) {
       const token = localStorage.getItem('token');
       return { username, token };
     }
-
     return {};
   });
 
   const setUserIn = ({ username, token }) => {
     localStorage.setItem('username', username);
     localStorage.setItem('token', token);
-    return setUser(username, token);
+    return setUserData({ username, token });
   };
 
   const logIn = () => setLoggedIn(true);
@@ -35,9 +34,9 @@ const AuthProvider = ({ children }) => {
     loggedIn,
     logIn,
     logOut,
-    user,
+    userData,
     setUserIn,
-  }), [loggedIn, user]);
+  }), [loggedIn, userData]);
 
   return (
     <AuthContext.Provider

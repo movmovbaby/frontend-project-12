@@ -11,7 +11,8 @@ import useAuth from '../hooks';
 
 const MessageForm = ({ socket }) => {
   const { t } = useTranslation();
-  const { username } = useAuth();
+  const { userData } = useAuth();
+  const { username } = userData;
 
   leoProfanity.loadDictionary('ru');
 

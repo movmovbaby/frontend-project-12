@@ -42,8 +42,8 @@ const SignupForm = () => {
       try {
         const { data } = await axios.post(routes.signupPath(), { username, password });
         if (data) {
-          const { name, token } = data;
-          auth.setUserIn({ username: name, token });
+          const { username: u, token: tok } = data;
+          auth.setUserIn({ username: u, token: tok });
           auth.logIn();
           formik.setSubmitting(false);
           navigate('/');
