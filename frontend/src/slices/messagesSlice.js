@@ -1,18 +1,6 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { actions as channelsActions } from './channelsSlice.js';
 
-/* export const fetchMessages = createAsyncThunk(
-  'channels/fetchMessages',
-  async () => {
-    const token = localStorage.getItem('token');
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    const response = await axios.get(routes.dataPath(), config);
-    return response.data.messages;
-  },
-); */
-
 const messagesAdapter = createEntityAdapter();
 
 const messagesSlice = createSlice({

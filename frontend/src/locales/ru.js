@@ -41,7 +41,13 @@ const ru = {
         rename: 'Переименовать',
       },
       error: {
-        fetching: 'Ошибка при загрузке списков каналов',
+        fetching: 'Ошибка при загрузке списка каналов',
+        unautorized: 'Ошибка авторизации',
+      },
+    },
+    messages: {
+      error: {
+        fetching: 'Ошибка при загрузке сообщений',
       },
     },
     messagesHeader: {

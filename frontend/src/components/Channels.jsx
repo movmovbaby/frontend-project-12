@@ -2,11 +2,13 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
+
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/index.jsx';
 import {
@@ -75,6 +77,7 @@ const Channels = () => {
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const channelsError = useSelector(selectChannelsError);
   const auth = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (channelsError) {
@@ -94,6 +97,11 @@ const Channels = () => {
         dispatch(channelsActions.addChannels(channels));
         dispatch(channelsActions.setActiveChannel(currentChannelId));
       } catch (error) {
+        const { status } = error.response;
+        if (status === 401) {
+          toast.error(t('channels.error.unautorized'));
+          setTimeout(() => navigate('/login'), 6000);
+        }
         toast.error(t('channels.error.fetching'));
       }
     };
