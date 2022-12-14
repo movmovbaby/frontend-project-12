@@ -40,6 +40,9 @@ const ru = {
         delete: 'Удалить',
         rename: 'Переименовать',
       },
+      error: {
+        fetching: 'Ошибка при загрузке списков каналов',
+      },
     },
     messagesHeader: {
       messagesCount_zero: '{{count}} сообщений',

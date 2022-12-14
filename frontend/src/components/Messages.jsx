@@ -1,17 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchMessages, selectors } from '../slices/messagesSlice.js';
+import { selectors, actions as messagesActions } from '../slices/messagesSlice.js';
 import MessageForm from './MessageForm.jsx';
 import { selectors as channelsSelector } from '../slices/channelsSlice.js';
+import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const Messages = ({ socket }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const auth = useAuth();
 
   useEffect(() => {
-    dispatch(fetchMessages());
+    const fetchMessages = async () => {
+      const { token } = auth.userData;
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const response = await axios.get(routes.dataPath(), config);
+      const { messages } = response.data;
+      dispatch(messagesActions.addMessages(messages));
+    };
+    fetchMessages();
   }, [dispatch]);
 
   const messages = useSelector(selectors.selectAll);

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -7,13 +8,14 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import useAuth from '../hooks/index.jsx';
 import {
-  fetchChannels,
   selectors,
   selectChannelsError,
   actions as channelsActions,
 } from '../slices/channelsSlice.js';
 import { actions as modalActions } from '../slices/modalSlice.js';
+import routes from '../routes.js';
 
 const SimpleButton = (props) => {
   const { channel, isActive } = props;
@@ -69,10 +71,10 @@ const RemovableButton = (props) => {
 
 const Channels = () => {
   const dispatch = useDispatch();
-  const channels = useSelector(selectors.selectAll);
   const { t } = useTranslation();
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const channelsError = useSelector(selectChannelsError);
+  const auth = useAuth();
 
   useEffect(() => {
     if (channelsError) {
@@ -81,8 +83,24 @@ const Channels = () => {
   }, [channelsError]);
 
   useEffect(() => {
-    dispatch(fetchChannels());
+    const fetchChannels = async () => {
+      const { token } = auth.userData;
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        const response = await axios.get(routes.dataPath(), config);
+        const { channels, currentChannelId } = response.data;
+        dispatch(channelsActions.addChannels(channels));
+        dispatch(channelsActions.setActiveChannel(currentChannelId));
+      } catch (error) {
+        toast.error(t('channels.error.fetching'));
+      }
+    };
+    fetchChannels();
   }, [dispatch]);
+
+  const channels = useSelector(selectors.selectAll);
 
   return channels && (
     <>
