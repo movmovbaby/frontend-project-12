@@ -8,7 +8,7 @@ import Messages from './Messages.jsx';
 import Wrapper from './Wrapper.jsx';
 import Modal from './Modals/Modal.jsx';
 
-const Chat = ({ socket }) => {
+const Chat = () => {
   const isOpened = useSelector((state) => state.modal.isOpened);
   return (
     <Wrapper>
@@ -17,9 +17,9 @@ const Chat = ({ socket }) => {
           <Col className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
             <Channels />
           </Col>
-          <Col className="p-0 h-100"><Messages socket={socket} /></Col>
+          <Col className="p-0 h-100"><Messages /></Col>
         </Row>
-        {isOpened && <Modal socket={socket} />}
+        {isOpened && <Modal />}
       </Container>
     </Wrapper>
   );

@@ -4,18 +4,18 @@ import AddChannelModal from './AddChannelModal';
 import DeleteChannelModal from './DeleteChannelModal';
 import RenameChannelModal from './RenameChannelModal';
 
-const Modal = ({ socket }) => {
+const Modal = () => {
   const type = useSelector((state) => state.modal.type);
 
   switch (type) {
     case 'addChannel':
-      return (<AddChannelModal socket={socket} />);
+      return (<AddChannelModal />);
 
     case 'deleteChannel':
-      return (<DeleteChannelModal socket={socket} />);
+      return (<DeleteChannelModal />);
 
     case 'renameChannel':
-      return (<RenameChannelModal socket={socket} />);
+      return (<RenameChannelModal />);
 
     default:
       return null;

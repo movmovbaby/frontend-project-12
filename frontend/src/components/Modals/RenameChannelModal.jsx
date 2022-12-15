@@ -9,9 +9,11 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { selectors } from '../../slices/channelsSlice.js';
 import { actions as modalActions } from '../../slices/modalSlice.js';
+import { useApi } from '../../hooks/index.jsx';
 
-const RenameChannelModal = ({ socket }) => {
+const RenameChannelModal = () => {
   const [modalShow, setModalShow] = useState(true);
+  const api = useApi();
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
   const { channelId } = useSelector((state) => state.modal.extra);
@@ -41,15 +43,13 @@ const RenameChannelModal = ({ socket }) => {
         return;
       }
 
-      socket.timeout(3000).emit('renameChannel', { id: channelId, name }, (error) => {
-        if (error) {
-          formik.setErrors({ name: t('renameChannel.error.network') });
-        } else {
-          setModalShow(false);
-          dispatch(modalActions.closeModal());
-          toast.success(t('renameChannel.success'));
-        }
-      });
+      const result = api.renameChannel({ channelId, name });
+      console.log('rename chan', result);
+      if (result) {
+        toast.success(t('renameChannel.success'));
+      } else {
+        formik.setErrors({ name: t('renameChannel.error.network') });
+      }
     },
   });
 

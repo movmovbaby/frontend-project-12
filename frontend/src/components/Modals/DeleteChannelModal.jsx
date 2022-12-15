@@ -5,30 +5,26 @@ import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice.js';
-import { actions as channelsActions } from '../../slices/channelsSlice.js';
+import { useApi } from '../../hooks/index.jsx';
 
-const DeleteChannelModal = ({ socket }) => {
+const DeleteChannelModal = () => {
   const [modalShow, setModalShow] = useState(true);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { channelId } = useSelector((state) => state.modal.extra);
+  const api = useApi();
 
   const closeModal = () => {
     setModalShow(false);
     dispatch(modalActions.closeModal());
   };
 
-  const deleteChannel = (id) => {
-    socket.timeout(3000).emit('removeChannel', { id }, (error) => {
-      if (error) {
-        console.log(t('deleteChannel.errors.network'));
-      } else {
-        dispatch(channelsActions.setActiveChannel(1));
-        dispatch(modalActions.closeModal());
-        toast.success(t('deleteChannel.success'));
-      }
-    });
-  };
+  const result = api.deleteChannel(channelId);
+  if (result) {
+    toast.success(t('deleteChannel.success'));
+  } else {
+    toast.error(t('deleteChannel.error.network'));
+  }
 
   return (
     <Modal
@@ -44,7 +40,7 @@ const DeleteChannelModal = ({ socket }) => {
           <Button variant="secondary" className="me-2" onClick={() => closeModal()}>
             {t('deleteChannel.button.cancel')}
           </Button>
-          <Button variant="danger" onClick={() => deleteChannel(channelId)}>
+          <Button variant="danger" onClick={() => api.deleteChannel(channelId)}>
             {t('deleteChannel.button.delete')}
           </Button>
         </div>

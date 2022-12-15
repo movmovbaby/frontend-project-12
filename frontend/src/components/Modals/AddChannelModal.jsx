@@ -7,13 +7,15 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectors, actions as channelsActions } from '../../slices/channelsSlice.js';
+import { selectors } from '../../slices/channelsSlice.js';
 import { actions as modalActions } from '../../slices/modalSlice.js';
+import { useApi } from '../../hooks/index.jsx';
 
-const AddChannelModal = ({ socket }) => {
+const AddChannelModal = () => {
   const [modalShow, setModalShow] = useState(true);
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
+  const api = useApi();
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -39,15 +41,12 @@ const AddChannelModal = ({ socket }) => {
         return;
       }
 
-      socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
-        if (error) {
-          formik.setErrors({ name: t('addChannel.errors.network') });
-        } else {
-          dispatch(channelsActions.setActiveChannel(response.data.id));
-          dispatch(modalActions.closeModal());
-          toast.success(t('addChannel.success'));
-        }
-      });
+      const result = api.newChannel(name);
+      if (result) {
+        toast.success(t('addChannel.success'));
+      } else {
+        formik.setErrors({ name: t('addChannel.errors.network') });
+      }
     },
   });
 

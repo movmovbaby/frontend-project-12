@@ -64,6 +64,7 @@ const ru = {
       title: 'Добавить канал',
       form: {
         label: 'Имя канала',
+        validation: 'Имя обязательное поле',
       },
       button: {
         cancel: 'Отменить',

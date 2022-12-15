@@ -7,10 +7,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/esm/Button';
 import { useTranslation } from 'react-i18next';
 import * as leoProfanity from 'leo-profanity';
-import { useAuth } from '../hooks';
+import { toast } from 'react-toastify';
+import { useAuth, useApi } from '../hooks/index.jsx';
 
-const MessageForm = ({ socket }) => {
+const MessageForm = () => {
   const { t } = useTranslation();
+  const api = useApi();
   const { userData } = useAuth();
   const { username } = userData;
 
@@ -22,23 +24,22 @@ const MessageForm = ({ socket }) => {
       message: '',
     },
     validationSchema: yup.object().shape({
-      message: yup.string().required(),
+      message: yup.string().required(t('addChannel.form.validation')),
     }),
     onSubmit: (values) => {
       formik.isSubmitting = true;
       const filtredMessage = leoProfanity.clean(values.message);
 
       const message = { body: filtredMessage, username, channelId: currentChannelId };
-      socket.timeout(3000).emit('newMessage', message, (error) => {
-        if (error) {
-          console.log('Socket.io error while emit message');
-          formik.isSubmitting = false;
-        } else {
-          formik.isSubmitting = false;
-          /* eslint-disable-next-line no-param-reassign */
-          values.message = '';
-        }
-      });
+
+      const result = api.newMessage(message);
+      if (result) {
+        formik.isSubmitting = false;
+        formik.resetForm();
+      } else {
+        toast('Socket.io error while emit message');
+        formik.isSubmitting = false;
+      }
     },
   });
 
