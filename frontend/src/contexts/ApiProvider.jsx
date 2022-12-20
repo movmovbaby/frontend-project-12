@@ -1,40 +1,40 @@
 import React, { useMemo } from 'react';
-// import { useDispatch } from 'react-redux';
 import { ApiContext } from './index.jsx';
-// import { actions as channelsActions } from '../slices/channelsSlice.js';
-// import { actions as modalActions } from '../slices/modalSlice.js';
 
 const ApiProvider = ({ socket, children }) => {
-  // const dispatch = useDispatch();
-
   const newChannel = (name, resolve, reject) => socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
     if (error) {
       reject();
+    } else {
+      resolve(response);
     }
-    resolve(response);
   });
 
   const deleteChannel = (id, resolve, reject) => socket.timeout(3000).emit('removeChannel', { id }, (error) => {
     if (error) {
       reject();
+    } else {
+      resolve();
     }
-    resolve();
   });
 
   const renameChannel = ({ id, name }, resolve, reject) => socket
     .timeout(3000)
     .emit('renameChannel', { id, name }, (error) => {
       if (error) {
+        console.log('reneme chn err', error);
         reject();
+      } else {
+        resolve();
       }
-      resolve();
     });
 
   const newMessage = (message, resolve, reject) => socket.timeout(3000).emit('newMessage', message, (error) => {
     if (error) {
       reject();
+    } else {
+      resolve();
     }
-    resolve();
   });
 
   const api = useMemo(() => ({

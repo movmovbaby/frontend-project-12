@@ -11,19 +11,23 @@ import { actions as messagesActions } from './slices/messagesSlice.js';
 
 const init = async (socket) => {
   socket.on('newChannel', (channel) => {
+    console.log('new channel', channel);
     store.dispatch(channelsActions.addChannel(channel));
   });
 
   socket.on('removeChannel', (channelId) => {
+    console.log('remove Channel', channelId);
     const { id } = channelId;
     store.dispatch(channelsActions.deleteChannel(id));
   });
 
   socket.on('renameChannel', ({ id, name }) => {
+    console.log('rename channel', id, name);
     store.dispatch(channelsActions.updateChannel({ id, changes: { name } }));
   });
 
   socket.on('newMessage', (msg) => {
+    console.log('new msg', msg);
     store.dispatch(messagesActions.addMessage(msg));
   });
 
