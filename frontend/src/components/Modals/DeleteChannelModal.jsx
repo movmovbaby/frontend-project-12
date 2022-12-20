@@ -20,18 +20,6 @@ const DeleteChannelModal = () => {
     dispatch(modalActions.closeModal());
   };
 
-  deleteChannel(
-    channelId,
-    () => {
-      dispatch(channelsActions.setActiveChannel(1));
-      dispatch(modalActions.closeModal());
-      toast.success(t('deleteChannel.success'));
-    },
-    () => {
-      toast.error(t('deleteChannel.error.network'));
-    },
-  );
-
   return (
     <Modal
       show={modalShow}
@@ -46,7 +34,20 @@ const DeleteChannelModal = () => {
           <Button variant="secondary" className="me-2" onClick={() => closeModal()}>
             {t('deleteChannel.button.cancel')}
           </Button>
-          <Button variant="danger" onClick={() => deleteChannel(channelId)}>
+          <Button
+            variant="danger"
+            onClick={() => deleteChannel(
+              channelId,
+              () => {
+                dispatch(channelsActions.setActiveChannel(1));
+                dispatch(modalActions.closeModal());
+                toast.success(t('deleteChannel.success'));
+              },
+              () => {
+                toast.error(t('deleteChannel.error.network'));
+              },
+            )}
+          >
             {t('deleteChannel.button.delete')}
           </Button>
         </div>
