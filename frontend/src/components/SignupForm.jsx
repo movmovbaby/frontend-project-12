@@ -24,16 +24,16 @@ const SignupForm = () => {
     validationSchema: yup.object().shape({
       username: yup
         .string()
-        .required()
+        .required(t('yupValidation.required'))
         .min(3, t('signupForm.validationError.usernameField'))
         .max(20, t('signupForm.validationError.usernameField')),
       password: yup
         .string()
-        .required()
+        .required(t('yupValidation.required'))
         .min(6, t('signupForm.validationError.passwordField')),
       confirmPassword: yup
         .string()
-        .required()
+        .required(t('yupValidation.required'))
         .oneOf([yup.ref('password'), null], t('signupForm.validationError.confirmPasswordField')),
     }),
     onSubmit: async (values) => {

@@ -22,8 +22,8 @@ const LoginForm = () => {
       password: '',
     },
     validationSchema: yup.object().shape({
-      username: yup.string().required(),
-      password: yup.string().required(),
+      username: yup.string().required(t('yupValidation.required')),
+      password: yup.string().required(t('yupValidation.required')),
     }),
     onSubmit: async (values) => {
       formik.setSubmitting(true);

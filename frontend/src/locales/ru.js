@@ -28,6 +28,9 @@ const ru = {
         userAlreadyExist: 'Такой пользователь уже существует',
       },
     },
+    yupValidation: {
+      required: 'Обязательное поле',
+    },
     navbar: {
       brand: 'Hexlet Chat',
       button: 'Выйти',
@@ -64,7 +67,6 @@ const ru = {
       title: 'Добавить канал',
       form: {
         label: 'Имя канала',
-        validation: 'Имя обязательное поле',
       },
       button: {
         cancel: 'Отменить',
