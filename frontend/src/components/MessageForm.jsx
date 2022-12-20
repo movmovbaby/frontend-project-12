@@ -12,7 +12,7 @@ import { useAuth, useApi } from '../hooks/index.jsx';
 
 const MessageForm = () => {
   const { t } = useTranslation();
-  const api = useApi();
+  const { newMessage } = useApi();
   const { userData } = useAuth();
   const { username } = userData;
 
@@ -24,7 +24,7 @@ const MessageForm = () => {
       message: '',
     },
     validationSchema: yup.object().shape({
-      message: yup.string().required(t('addChannel.form.validation')),
+      message: yup.string().required(t('yupValidation.required')),
     }),
     onSubmit: (values) => {
       formik.isSubmitting = true;
@@ -32,14 +32,17 @@ const MessageForm = () => {
 
       const message = { body: filtredMessage, username, channelId: currentChannelId };
 
-      const result = api.newMessage(message);
-      if (result) {
-        formik.isSubmitting = false;
-        formik.resetForm();
-      } else {
-        toast('Socket.io error while emit message');
-        formik.isSubmitting = false;
-      }
+      newMessage(
+        message,
+        () => {
+          formik.isSubmitting = false;
+          formik.resetForm();
+        },
+        () => {
+          toast('Socket.io error while emit message');
+          formik.isSubmitting = false;
+        },
+      );
     },
   });
 

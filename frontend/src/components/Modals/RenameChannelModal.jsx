@@ -13,7 +13,7 @@ import { useApi } from '../../hooks/index.jsx';
 
 const RenameChannelModal = () => {
   const [modalShow, setModalShow] = useState(true);
-  const api = useApi();
+  const { renameChannel } = useApi();
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
   const { channelId } = useSelector((state) => state.modal.extra);
@@ -32,7 +32,7 @@ const RenameChannelModal = () => {
       name: renamingChannel.name,
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required(),
+      name: yup.string().required(t('yupValidation.required')),
     }),
     onSubmit: (values) => {
       const { name } = values;
@@ -43,13 +43,17 @@ const RenameChannelModal = () => {
         return;
       }
 
-      const result = api.renameChannel({ channelId, name });
-      console.log('rename chan', result);
-      if (result) {
-        toast.success(t('renameChannel.success'));
-      } else {
-        formik.setErrors({ name: t('renameChannel.error.network') });
-      }
+      renameChannel(
+        { channelId, name },
+        () => {
+          setModalShow(false);
+          dispatch(modalActions.closeModal());
+          toast.success(t('renameChannel.success'));
+        },
+        () => {
+          formik.setErrors({ name: t('renameChannel.error.network') });
+        },
+      );
     },
   });
 
@@ -57,7 +61,6 @@ const RenameChannelModal = () => {
     <Modal
       show={modalShow}
       onHide={() => closeModal()}
-      size="m"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

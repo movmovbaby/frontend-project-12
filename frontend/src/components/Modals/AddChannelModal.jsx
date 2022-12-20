@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectors } from '../../slices/channelsSlice.js';
+import { selectors, actions as channelsActions } from '../../slices/channelsSlice.js';
 import { actions as modalActions } from '../../slices/modalSlice.js';
 import { useApi } from '../../hooks/index.jsx';
 
@@ -15,7 +15,7 @@ const AddChannelModal = () => {
   const [modalShow, setModalShow] = useState(true);
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
-  const api = useApi();
+  const { newChannel } = useApi();
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const AddChannelModal = () => {
       name: '',
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required(),
+      name: yup.string().required(t('yupValidation.required')),
     }),
     onSubmit: (values) => {
       const { name } = values;
@@ -41,12 +41,15 @@ const AddChannelModal = () => {
         return;
       }
 
-      const result = api.newChannel(name);
-      if (result) {
-        toast.success(t('addChannel.success'));
-      } else {
-        formik.setErrors({ name: t('addChannel.errors.network') });
-      }
+      newChannel(
+        name,
+        (response) => {
+          dispatch(channelsActions.setActiveChannel(response.data.id));
+          dispatch(modalActions.closeModal());
+          toast.success(t('addChannel.success'));
+        },
+        () => { formik.setErrors({ name: t('addChannel.errors.network') }); },
+      );
     },
   });
 
