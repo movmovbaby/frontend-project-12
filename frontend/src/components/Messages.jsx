@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { animateScroll as scroll } from 'react-scroll';
 import { selectors, actions as messagesActions } from '../slices/messagesSlice.js';
 import MessageForm from './MessageForm.jsx';
 import { selectors as channelsSelector } from '../slices/channelsSlice.js';
@@ -36,6 +37,10 @@ const Messages = ({ socket }) => {
   const activeChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const activeChannel = useSelector((state) => channelsSelector.selectById(state, activeChannelId));
   const channelsMessages = messages.filter((message) => message.channelId === activeChannelId);
+
+  useEffect(() => {
+    scroll.scrollToBottom({ containerId: 'message-box' });
+  }, [channelsMessages]);
 
   return channelsMessages && (
     <div className="d-flex flex-column h-100">
