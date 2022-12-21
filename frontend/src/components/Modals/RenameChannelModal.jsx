@@ -44,7 +44,7 @@ const RenameChannelModal = () => {
       }
 
       renameChannel(
-        { channelId, name },
+        { id: channelId, name },
         () => {
           setModalShow(false);
           dispatch(modalActions.closeModal());
