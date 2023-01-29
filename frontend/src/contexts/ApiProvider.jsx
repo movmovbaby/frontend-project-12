@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { ApiContext } from './index.jsx';
+// import React, { useMemo } from 'react';
+// import { ApiContext } from './index.jsx';
 
-const ApiProvider = ({ socket, children }) => {
+const ApiProvider = ({ socket/* , children */ }) => {
   const newChannel = (name, resolve, reject) => socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
     if (error) {
       reject();
@@ -37,20 +37,28 @@ const ApiProvider = ({ socket, children }) => {
     }
   });
 
-  const api = useMemo(() => ({
+  // const api = useMemo(() => ({
+  //   newChannel,
+  //   deleteChannel,
+  //   renameChannel,
+  //   newMessage,
+  // }), []);
+
+  const api = {
     newChannel,
     deleteChannel,
     renameChannel,
     newMessage,
-  }), []);
+  };
 
-  return (
-    <ApiContext.Provider
-      value={api}
-    >
-      {children}
-    </ApiContext.Provider>
-  );
+  // return (
+  //   <ApiContext.Provider
+  //     value={api}
+  //   >
+  //     {children}
+  //   </ApiContext.Provider>
+  // );
+  return api;
 };
 
 export default ApiProvider;
