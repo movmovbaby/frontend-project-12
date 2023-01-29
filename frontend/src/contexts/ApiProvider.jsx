@@ -1,24 +1,24 @@
-// import React, { useMemo } from 'react';
-// import { ApiContext } from './index.jsx';
+import React, { useMemo, useCallback } from 'react';
+import { ApiContext } from './index.jsx';
 
-const ApiProvider = ({ socket/* , children */ }) => {
-  const newChannel = (name, resolve, reject) => socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
+const ApiProvider = ({ socket, children }) => {
+  const newChannel = useCallback((name, resolve, reject) => socket.timeout(3000).emit('newChannel', { name }, (error, response) => {
     if (error) {
       reject();
     } else {
       resolve(response);
     }
-  });
+  }), [socket]);
 
-  const deleteChannel = (id, resolve, reject) => socket.timeout(3000).emit('removeChannel', { id }, (error) => {
+  const deleteChannel = useMemo((id, resolve, reject) => socket.timeout(3000).emit('removeChannel', { id }, (error) => {
     if (error) {
       reject();
     } else {
       resolve();
     }
-  });
+  }), [socket]);
 
-  const renameChannel = ({ id, name }, resolve, reject) => socket
+  const renameChannel = useCallback(({ id, name }, resolve, reject) => socket
     .timeout(3000)
     .emit('renameChannel', { id, name }, (error) => {
       if (error) {
@@ -27,38 +27,30 @@ const ApiProvider = ({ socket/* , children */ }) => {
       } else {
         resolve();
       }
-    });
+    }), [socket]);
 
-  const newMessage = (message, resolve, reject) => socket.timeout(3000).emit('newMessage', message, (error) => {
+  const newMessage = useCallback((message, resolve, reject) => socket.timeout(3000).emit('newMessage', message, (error) => {
     if (error) {
       reject();
     } else {
       resolve();
     }
-  });
+  }), [socket]);
 
-  // const api = useMemo(() => ({
-  //   newChannel,
-  //   deleteChannel,
-  //   renameChannel,
-  //   newMessage,
-  // }), []);
-
-  const api = {
+  const api = useMemo(() => ({
     newChannel,
     deleteChannel,
     renameChannel,
     newMessage,
-  };
+  }), [deleteChannel, newChannel, newMessage, renameChannel]);
 
-  // return (
-  //   <ApiContext.Provider
-  //     value={api}
-  //   >
-  //     {children}
-  //   </ApiContext.Provider>
-  // );
-  return api;
+  return (
+    <ApiContext.Provider
+      value={api}
+    >
+      {children}
+    </ApiContext.Provider>
+  );
 };
 
 export default ApiProvider;

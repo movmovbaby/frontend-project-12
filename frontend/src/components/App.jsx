@@ -9,7 +9,6 @@ import ErrorPage from './ErrorPage.jsx';
 import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
-import { ApiContext } from './index.jsx';
 import AuthProvider from '../contexts/AuthProvider.jsx';
 import ApiProvider from '../contexts/ApiProvider.jsx';
 import { useAuth } from '../hooks/index.jsx';
@@ -24,10 +23,7 @@ const PrivateRoute = ({ children }) => {
 
 const App = ({ socket }) => (
   <AuthProvider>
-    <ApiContext.Provider
-      value={ApiProvider}
-      socket={socket}
-    >
+    <ApiProvider socket={socket}>
       <BrowserRouter>
         <Routes>
           <Route
@@ -43,7 +39,7 @@ const App = ({ socket }) => (
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
-    </ApiContext.Provider>
+    </ApiProvider>
   </AuthProvider>
 );
 
